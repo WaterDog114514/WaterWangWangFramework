@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Win_ExcelTool : SingletonBaseWindow
 {
-    private ExcelToolSettingInfo SettingInfo;
+    private ExcelToolSettingData SettingInfo;
 
 
     //垃圾颜色字体
@@ -38,6 +38,7 @@ public class Win_ExcelTool : SingletonBaseWindow
         SettingInfo.propertyTypeRowIndex = EditorGUILayout.IntField("字段类型名所在行：",SettingInfo.propertyTypeRowIndex);
         SettingInfo.keyRowIndex= EditorGUILayout.IntField("容器类key标记所在行：",SettingInfo.keyRowIndex);
         SettingInfo.ReallyDataStartRowIndex = EditorGUILayout.IntField("真正数据存储开始读取行：",SettingInfo.ReallyDataStartRowIndex);
+        SettingInfo.SuffixName = EditorGUILayout.TextField("自定义后缀名:",SettingInfo.SuffixName);
         GUILayout.Label("从Excel表生成容器类和数据类：", TitleStyle);
         if (GUILayout.Button("生成单个Excel文件的数据类容器..."))
         {

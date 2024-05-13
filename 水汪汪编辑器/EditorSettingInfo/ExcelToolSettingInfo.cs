@@ -3,14 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //Excel保存二进制路径设置文件，编辑器模式专用
-public class ExcelToolSettingInfo : BaseSettingData
+public class ExcelToolSettingData : BaseSettingData
 {
 
     [JsonIgnore]
     public override string DirectoryPath => Application.dataPath + "\\水汪汪编辑器\\EditorAsset\\PluginsData\\Resources\\";
     [JsonIgnore]
     public override string DataName => "ExcelToolSettingInfo";
-
+    /// <summary>
+    /// 自定义二进制文件后缀名
+    /// </summary>
+    public string SuffixName;
     /// <summary>
     /// 属性名所在行
     /// </summary>
@@ -31,6 +34,7 @@ public class ExcelToolSettingInfo : BaseSettingData
     public string ExcelDirectory_Path;
     public override void IntiValue()
     {
+        SuffixName = "waterdogdata";
         //初始化
         ExcelDirectory_Path = Application.dataPath + "\\水汪汪编辑器\\GamePlugins\\ExcelTool\\Excel\\";
         OutPath = Application.dataPath + "\\水汪汪编辑器\\GamePlugins\\ExcelTool\\out\\";
@@ -38,5 +42,6 @@ public class ExcelToolSettingInfo : BaseSettingData
         propertyTypeRowIndex = 1;   
         keyRowIndex = 2;
         ReallyDataStartRowIndex =4;
+        
     }
 }

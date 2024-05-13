@@ -15,6 +15,7 @@ using UnityEngine.Experimental.AI;
 public class FrameworkSettingData : BaseSettingData
 {
     public ABLoadSettingData abLoadSetting;
+    public LoadContainerSettingData loadContainerSetting;
     public override void IntiValue()
     {
         abLoadSetting = new ABLoadSettingData();
@@ -23,12 +24,18 @@ public class FrameworkSettingData : BaseSettingData
         abLoadSetting.ObjPrefabPackName = "obj_prefab";
         abLoadSetting.UIPrefabPackName = "ui_prefab";
         abLoadSetting.ABEditorLoadPath = "Assets/Editor/ArtRes/";
+
+        loadContainerSetting = new LoadContainerSettingData();
+
     }
 
     public override string DirectoryPath  => Application.dataPath + @"\水汪汪小框架\SettingInfo\Resources\"; 
     public override string DataName => "FrameworkSetting";
    
 }
+/// <summary>
+/// AB包加载设置
+/// </summary>
 [Serializable]
 public class ABLoadSettingData
 {
@@ -65,6 +72,19 @@ public class ABLoadSettingData
     /// </summary>
     public string ABLoadPath;
 
+
+}
+
+/// <summary>
+/// 游戏配置文件加载设置
+/// </summary>
+[Serializable]
+public class LoadContainerSettingData
+{
+
+    public string DataPath;
+    public string SuffixName;
+    public bool IsDebugStreamingAssetLoad =false;
 
 }
 

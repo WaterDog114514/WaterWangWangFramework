@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DEMODMEO : MonoBehaviour
 {
-
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +14,6 @@ public class DEMODMEO : MonoBehaviour
     {
         if (GUILayout.Button("╪сть"))
         {
-
             AsyncLoadTask asyncLoadTask = ResLoader.Instance.LoadRes_Async<GameObject>("Prefab/smg1", (G) => { Instantiate(G);});
             asyncLoadTask.StartAsyncLoad();
             GameObject gg = ResLoader.Instance.LoadRes_Sync<GameObject>("Prefab/smg1");

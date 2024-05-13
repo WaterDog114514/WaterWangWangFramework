@@ -13,7 +13,7 @@ public class EM_ExcelTool : Singleton_UnMono<EM_ExcelTool>
 {
 
     private Assembly assembly = null;
-    public ExcelToolSettingInfo SettingInfo;
+    public ExcelToolSettingData SettingInfo;
     /// <summary>
     /// excel文件夹存放的路径
     /// </summary>
@@ -21,20 +21,10 @@ public class EM_ExcelTool : Singleton_UnMono<EM_ExcelTool>
     /// <summary>
     /// 二进制导出文件夹路径
     /// </summary>
-    private string OutPath => SettingInfo.OutPath;
-
-    private static string DATA_CLASS_PATH;
-    private static string DATA_BINARY_PATH;
-    private static string DATA_CONTAINER_PATH;
-
-    /// <summary>
-    /// 真正内容开始的行号
-    /// </summary>
-    public static int BEGIN_INDEX = 4;
 
     public EM_ExcelTool()
     {
-        SettingInfo = SettingDataLoader.Instance.LoadData<ExcelToolSettingInfo>();
+        SettingInfo = SettingDataLoader.Instance.LoadData<ExcelToolSettingData>();
         // 获取程序集的路径
         string assemblyPath = Path.Combine(Application.dataPath, "../Library/ScriptAssemblies/Assembly-CSharp.dll");
         // 加载程序集
@@ -276,7 +266,8 @@ public class EM_ExcelTool : Singleton_UnMono<EM_ExcelTool>
             {
                 Directory.CreateDirectory(SettingInfo.OutPath + "\\" + table.TableName + "\\");
             }
-            BinaryManager.Instance.Save(ContainerInstance, table.TableName + ".pzb", SettingInfo.OutPath + "\\" + table.TableName + "\\");
+            BinaryManager.Instance.Save(ContainerInstance, table.TableName + "."+SettingInfo.SuffixName
+                , SettingInfo.OutPath + "\\" + table.TableName + "\\");
             //重置默认参数
             Reset();
         }

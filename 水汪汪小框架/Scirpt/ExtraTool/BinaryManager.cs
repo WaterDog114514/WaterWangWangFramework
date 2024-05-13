@@ -35,26 +35,34 @@ public class BinaryManager : Singleton_UnMono<BinaryManager>
     /// <typeparam name="T"></typeparam>
     /// <param name="fileName"></param>
     /// <returns></returns>
-    public T Load<T>(string fileName, string path = null) where T : class
+    public T Load<T>( string path) where T : class
     {
-        if (path == null)
-            path = Application.persistentDataPath + "/";
-
-        //先判断路径文件夹有没有
-        if (!Directory.Exists(path)||!File.Exists(path+"/"+fileName) )
-          { 
-            Debug.LogError($"序列化加载失败，不存在此路径下的文件{path+fileName}");
+        //先判断路径文件有没有
+        if (!File.Exists(path))
+        {
+            Debug.LogError($"序列化加载失败，不存在此路径下的文件{path}");
             return default(T);
         }
 
         T obj = default(T);
 
-        using (FileStream fs = File.Open(path + "/" + fileName, FileMode.Open, FileAccess.Read))
+        using (FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read))
         {
             BinaryFormatter bf = new BinaryFormatter();
             obj = bf.Deserialize(fs) as T;
             fs.Close();
         }
         return obj;
+    }
+    /// <summary>
+    /// 直接从persistent加载文件
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="fileName"></param>
+    /// <returns></returns>
+    public T LoadFromName<T>(string fileName) where T : class
+    {
+        string path = Application.persistentDataPath + "/" + fileName;
+        return Load<T>(path);   
     }
 }

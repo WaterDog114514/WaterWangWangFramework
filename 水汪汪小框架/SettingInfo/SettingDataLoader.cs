@@ -6,7 +6,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// 配置文件加载器，专门加载配置文件
+/// 系统配置文件加载器，专门加载配置文件
 /// </summary>
 public class SettingDataLoader : Singleton_UnMono<SettingDataLoader>
 {
