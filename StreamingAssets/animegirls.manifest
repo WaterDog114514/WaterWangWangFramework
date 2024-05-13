@@ -1,0 +1,101 @@
+ManifestFileVersion: 0
+CRC: 1378440982
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c838ad99d24a2aa33c7e67a496761fdc
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: d39fc7ed96cfbc172e522435a41a40ee
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Hair3_head.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_underwear_1.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Hair4_head.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/Demo files/Tex_Background.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_EyeWhite.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_transp_Eye_color2.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_underwear_2.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/Demo files/Mat_Background.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Eyeliner.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/Demo files/AC.controller
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Hair4_hair.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_Hair_3_hair.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_Hair_1_hair.mat
+- Assets/Editor/ArtRes/AnimeGirls/Casual1/SourceFiles/Mesh/AnimeGirl.fbx
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Eye.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_underwear_1.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Hair1_head.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/Demo files/Anim_Idle.fbx
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_Hair_2_head.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_underwear_2.png
+- Assets/Editor/ArtRes/AnimeGirls/Casual1/SourceFiles/Texture/Casual1.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Body.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_transp_Eye_color4.mat
+- Assets/Editor/ArtRes/AnimeGirls/Casual1/SourceFiles/Texture/Casual1NORMAL.png
+- Assets/Editor/ArtRes/AnimeGirls/Casual1/SourceFiles/Material/Mat.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Eyeliner.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_Hair_5_hair.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/mouth_inside.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_Hair_4_head.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Eyelashes.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Eyebrows.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Eyes.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Face_makeup.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Mouth.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/EyeBack.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_underwear_3.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Hair3_hair.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Hair2_hair.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Face.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_Hair_1_head.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_EyeReflection.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Hair5_head.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Hair2_head.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/Demo files/Mesh_Background.fbx
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_Hair_5_head.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Eye_reflection.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_Hair_2_hair.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Hair1_hair.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_Hair_4_hair.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Shader/UnlitColor.shader
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Eyelashes.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Hair_head.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Face.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Shader/DoubleSided.shader
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_EyeReflection.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_Hair_3_head.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Body.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Eyebrows.png
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Mat/Mat_transp_Eye_color3.mat
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/BaseCharacter.fbx
+- Assets/Editor/ArtRes/AnimeGirls/BaseCharacter/BaseCharacter/Sourcefiles/Tex/Tex_Hair5_hair.png
+Dependencies: []

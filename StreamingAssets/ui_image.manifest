@@ -1,0 +1,70 @@
+ManifestFileVersion: 0
+CRC: 3806839565
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 6d4361185287427f388ade4069753ee9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f267fd2d8bcb1179236b6179ac5313bc
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/ArrowTop.png"
+- Assets/Editor/ArtRes/UI/Elements/ArrowRight.png
+- Assets/Editor/ArtRes/UI/Elements/IconD09.png
+- Assets/Editor/ArtRes/UI/Elements/IconD14.png
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/Slider.png"
+- Assets/Editor/ArtRes/UI/Elements/IconD01.png
+- Assets/Editor/ArtRes/UI/Elements/IconD05.png
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/BtnDefault.png"
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/TopMenu.png"
+- Assets/Editor/ArtRes/UI/Main Game(Example)/BqMain.png
+- Assets/Editor/ArtRes/UI/Main Game(Example)/Btn03.png
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/ScrollBar.png"
+- Assets/Editor/ArtRes/UI/Elements/IconD08.png
+- Assets/Editor/ArtRes/UI/Elements/PanelTitleSettings.png
+- Assets/Editor/ArtRes/UI/Elements/IconD07.png
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/Icon02.png"
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/BqPanelBotton.png"
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/Background.jpg"
+- Assets/Editor/ArtRes/UI/Elements/IconD02.png
+- Assets/Editor/ArtRes/UI/Elements/IconD12.png
+- Assets/Editor/ArtRes/UI/Elements/BlockInformation.png
+- Assets/Editor/ArtRes/UI/Main Game(Example)/Logo.png
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/Icon03.png"
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/ItemDisable.png"
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/ItemEnable.png"
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/TopMenu2.png"
+- Assets/Editor/ArtRes/UI/Main Game(Example)/Btn02.png
+- Assets/Editor/ArtRes/UI/Main Game(Example)/Btn01.png
+- Assets/Editor/ArtRes/UI/Elements/IconD04.png
+- Assets/Editor/ArtRes/UI/Selection BTN(Example)/Icon02.png
+- Assets/Editor/ArtRes/UI/Main Game(Example)/Btn06.png
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/BtnBack.png"
+- Assets/Editor/ArtRes/UI/Elements/IconD13.png
+- Assets/Editor/ArtRes/UI/Elements/IconD15.png
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/Icon01.png"
+- Assets/Editor/ArtRes/UI/Main Game(Example)/Btn04.png
+- Assets/Editor/ArtRes/UI/Elements/IconD03.png
+- Assets/Editor/ArtRes/UI/Main Game(Example)/Btn05.png
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/BtnNext.png"
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/Icon04.png"
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/Icon05.png"
+- Assets/Editor/ArtRes/UI/Elements/IconD10.png
+- Assets/Editor/ArtRes/UI/Selection BTN(Example)/IconStatic.png
+- Assets/Editor/ArtRes/UI/Elements/ArrowLeft.png
+- Assets/Editor/ArtRes/UI/Selection BTN(Example)/HeroCard2.png
+- Assets/Editor/ArtRes/UI/Selection BTN(Example)/Icon01.png
+- Assets/Editor/ArtRes/UI/Elements/IconD11.png
+- Assets/Editor/ArtRes/UI/Elements/IconD06.png
+- Assets/Editor/ArtRes/UI/Selection BTN(Example)/Icon03.png
+- "Assets/Editor/ArtRes/UI/\u0421ommonElement/Logo.png"
+- Assets/Editor/ArtRes/UI/Sci-Fi UI (Use Photoshop).psd
+- Assets/Editor/ArtRes/UI/Selection BTN(Example)/HeroCard.png
+Dependencies: []

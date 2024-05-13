@@ -1,0 +1,81 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+//一套适配PC的输入信息
+
+/// <summary>
+/// 输入信息
+/// </summary>
+public class InputInfo
+{
+    //public bool 
+    //输入的类型——抬起、按下、长按
+    public InputType inputType;
+    public InputKey positiveKey;
+    public InputKey negativeKey;
+    /// <summary>
+    /// 0为骤变 Value只会为 -1 0 1 设置1为渐变，会慢慢的渐变到1，-1
+    /// </summary>
+    public float ValueChangeSpeed;
+    /// <summary>
+    /// 按下后会改变值
+    /// </summary>
+    public float Value;
+    //鼠标键ID
+    public int mouseID;
+
+    public void Update()
+    {
+
+    }
+}
+/// <summary>
+/// 键盘按键
+/// </summary>
+public class InputKey
+{
+    public KeyCode keyCode;
+    /// <summary>
+    /// 是否按下了
+    /// </summary>
+    public bool isDown;
+}
+public class InputType
+{
+    public E_InputDevice device;
+    //当枚举按键枚举选择
+    public E_InputType inputType;
+    public InputType(E_InputDevice device, E_InputType Type)
+    {
+        if (device == E_InputDevice.Keyborad&& (Type== E_InputType.MouseMove|| Type == E_InputType.MouseScorll) )
+        {
+            Debug.LogError("映射错误！键盘输入不能使用鼠标输入方式");
+            Type = E_InputType.Down;
+        }
+        this.device = device;
+        this.inputType = Type;
+    }  
+    public enum E_InputType
+    {
+        /// <summary>
+        /// 按下
+        /// </summary>
+        Down,
+        /// <summary>
+        /// 抬起
+        /// </summary>
+        Up,
+        /// <summary>
+        /// 长按
+        /// </summary>
+        Always,
+        MouseMove,
+        MouseScorll
+    }
+    public enum E_InputDevice
+    {
+        Mouse, Keyborad
+    }
+}

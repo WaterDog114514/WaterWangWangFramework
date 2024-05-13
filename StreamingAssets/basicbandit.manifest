@@ -1,0 +1,54 @@
+ManifestFileVersion: 0
+CRC: 3281153392
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 913b8a767caf5694a45bf23f7034c73e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: a3bc7c3375d7f22d584d9ad8932ec33a
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Editor/ArtRes/BasicBandit/BasicBanditTextures/BasicBandit_Body_AlbedoTransparency.png
+- Assets/Editor/ArtRes/BasicBandit/DemoSceneBasicBandit/Controller/Basic_Controller.controller
+- Assets/Editor/ArtRes/BasicBandit/Materials/BasicBandit_EyeMAt.mat
+- Assets/Editor/ArtRes/BasicBandit/BasicBanditTextures/BasicBandit_Cloth_MetallicSmoothness.png
+- Assets/Editor/ArtRes/BasicBandit/BasicBanditTextures/BasicBanditEye_Diff.psd
+- Assets/Editor/ArtRes/BasicBandit/Materials/BasicBandit_Body.mat
+- Assets/Editor/ArtRes/BasicBandit/DemoSceneBasicBandit/AnimationsDemoscene/IdleGrab_Neutral.fbx
+- Assets/Editor/ArtRes/BasicBandit/DemoSceneBasicBandit/AnimationsDemoscene/SprintJump_ToLeft_R.fbx
+- Assets/Editor/ArtRes/BasicBandit/BasicBanditTextures/BasicBandit_Body_MetallicSmoothness.png
+- Assets/Editor/ArtRes/BasicBandit/DemoSceneBasicBandit/AnimationsDemoscene/IdleR_To_IdleL_1.fbx
+- Assets/Editor/ArtRes/BasicBandit/BasicBanditTextures/BasicBandit_Cloth_AlbedoTransparency.png
+- Assets/Editor/ArtRes/BasicBandit/DemoSceneBasicBandit/Materials/Black.mat
+- Assets/Editor/ArtRes/BasicBandit/BasicBanditTextures/BasicBandit_Body_Normal.png
+- Assets/Editor/ArtRes/BasicBandit/BasicBanditTextures/BasicBandit_Cloth_Normal.png
+- Assets/Editor/ArtRes/BasicBandit/DemoSceneBasicBandit/AnimationsDemoscene/WalkFWD.fbx
+- Assets/Editor/ArtRes/BasicBandit/DemoSceneBasicBandit/Materials/Skybox.mat
+- Assets/Editor/ArtRes/BasicBandit/Basic_Bandit.fbx
+- Assets/Editor/ArtRes/BasicBandit/Materials/BasicBandit_Cloth.mat
+Dependencies: []
