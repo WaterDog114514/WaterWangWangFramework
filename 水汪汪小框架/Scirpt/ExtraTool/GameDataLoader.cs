@@ -23,11 +23,12 @@ public class GameExcelDataLoader : Singleton_UnMono<GameExcelDataLoader>
     /// <returns></returns>
     public T GetDataContainer<T>() where T : DataBaseContainer
     {
-        string key = typeof(T).Name;
+        string key =typeof(T).Name.Replace("Container",null);
         if (!dic_LoadedContainer.ContainsKey(key))
         {
+            string path = FKsettingData.loadContainerSetting.IsDebugStreamingAssetLoad? Application.streamingAssetsPath+"/settinginfo": FKsettingData.loadContainerSetting.DataPath;
             //ох╪сть
-           T Container = BinaryManager.Instance.Load<T>($"{FKsettingData.loadContainerSetting.DataPath}/{key}.{ExcelsettingData.SuffixName}");
+           T Container = BinaryManager.Instance.Load<T>($"{path}/{key}.{ExcelsettingData.SuffixName}");
             dic_LoadedContainer.Add(key, Container);
         }
         return dic_LoadedContainer[key] as T;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 /// <summary>
@@ -128,6 +129,40 @@ class main_Preloader
         {
             //分配每一个任务的协程
            //  task.coroutines[i] = ResLoader.Instance.LoadAB_Async(task.ResInfos[i].ABName, task.ResInfos[i].ResName, null);
+        }
+    }
+
+    public void PreloadFromExcel<T>(string ResPathName) where T : DataBaseContainer
+    {
+        T container = GameExcelDataLoader.Instance.GetDataContainer<T>();
+        // 反射获取dataDic字段
+        var dataDicField = typeof(T).GetField("dataDic");
+        if (dataDicField == null)
+        {
+            Debug.LogError($"读取错误，请不要在{typeof(T).Name}中改dataDic属性名");
+            return;
+        }
+        // 获取dataDic的值
+        var dataDicValue = dataDicField.GetValue(container) as IDictionary;
+
+        // 获取字典的值类型（类型2）
+        var valueType = dataDicField.FieldType.GetGenericArguments()[1];
+
+        // 通过类型2得到名为name的字段
+        var nameField = valueType.GetField(ResPathName);
+        if (nameField == null)
+        {
+            Debug.LogError($"读取错误，数据对象类中{valueType.Name}不存在{ResPathName}的字段");
+            return;
+        }
+
+        // 遍历字典，获取名为name的字段的值
+        foreach (DictionaryEntry pair in dataDicValue)
+        {
+            object valueObject = pair.Value;
+            object nameFieldValue = nameField.GetValue(valueObject);
+            // 现在你可以使用nameFieldValue
+            Debug.Log("资源地址:" + nameFieldValue.ToString());
         }
     }
 }

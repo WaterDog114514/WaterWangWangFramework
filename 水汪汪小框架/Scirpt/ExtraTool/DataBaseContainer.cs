@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// ÈİÆ÷»ùÀà
 /// </summary>
+[System.Serializable]
 public class DataBaseContainer
 {
    

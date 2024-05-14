@@ -212,7 +212,10 @@ public class ResLoader : Singleton_UnMono<ResLoader>
         preloader.waitLoadAssetBundle.Add(MonoManager.Instance.StartCoroutine(preloader.ReallyCreatePreloadABTask(taskName, ABName, type, abLoader)));
     }
 
-
+    public void CreatePreloadFromExcel<T>(string name) where T : DataBaseContainer
+    {
+        preloader.PreloadFromExcel<T>(name);
+    }
     #endregion
 
 
