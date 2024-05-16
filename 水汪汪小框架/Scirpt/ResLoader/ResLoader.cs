@@ -38,56 +38,55 @@ public class ResLoader : Singleton_UnMono<ResLoader>
     }
 
     #region AB包加载相关
-    /// <summary>
-    /// 通过类型异步加载AB包资源
-    /// </summary>
-    /// <param name="abName"></param>
-    /// <param name="resName"></param>
-    /// <param name="callback"></param>
-    /// <returns></returns>M
-    public AsyncLoadTask LoadAB_Async<T>(string abName, string resName, UnityAction<T> callback) where T : UnityEngine.Object
+    //下面两者创建任务然后直接加载
+    // 通过类型加载AB包
+    public void LoadAB_Async<T>(string abName, string resName, UnityAction<T> callback) where T : UnityEngine.Object
+    {
+        AsyncLoadTask task = CreateAB_Async<T>(abName, resName, callback);
+        if (task != null)
+            task.StartAsyncLoad();
+    }
+    // 通过名字异步加载AB包资源
+    public void LoadAB_Async(string abName, string resName, UnityAction<UnityEngine.Object> callback)
+    {
+        AsyncLoadTask task = CreateAB_Async<UnityEngine.Object>(abName, resName, callback);
+        if (task != null)
+            task.StartAsyncLoad();
+    }
+    //创建AB包任务，不会立即加载，需要手动加载才行
+    public AsyncLoadTask CreateAB_Async<T>(string abName, string resName, UnityAction<T> callback) where T : UnityEngine.Object
     {
 
         string key = $"AB_{abName}_{resName}";
         //先任务是否第一次加载完成了吗
         if (!IsFirstAsyncLoad(key, callback))
-            return dic_LoadedTask[key];
+            return null;
 
 #if UNITY_EDITOR
         if (settingData.abLoadSetting.IsDebugABLoad)
         {
             EditorLoadABRes(abName, resName, callback);
-            return dic_LoadedTask[key];
+            return null;
         }
 #endif
-
+        Debug.Log("jiangshi");
         //第一次就新建任务
         AsyncLoadTask task = new AsyncLoadTask();
         task.IntiLoadOperation(abLoader.ReallyLoadAsync<T>(abName, resName, task));
         task.AddCallbackCommand(new LoadResAsyncCommand<T>(callback, task));
         //加载资源占位
         dic_LoadedRes.Add(key, null);
+        //记录到字典中
+        dic_LoadedTask.Add(key, task);
         //异步加载完成记录
         task.AddCallbackCommand(() =>
         {
             dic_LoadedRes[key] = task.ResInfo;
+            dic_LoadedTask.Remove(key);
         });
-        //记录到字典中
-        dic_LoadedTask.Add(key, task);
+
         return task;
     }
-    /// <summary>
-    /// 通过名字异步加载AB包资源
-    /// </summary>
-    /// <param name="abName"></param>
-    /// <param name="resName"></param>
-    /// <param name="callback"></param>
-    /// <returns></returns>
-    public AsyncLoadTask LoadAB_Async(string abName, string resName, UnityAction<UnityEngine.Object> callback)
-    {
-        return LoadAB_Async<UnityEngine.Object>(abName, resName, callback);
-    }
-
 
     /// <summary>
     /// (开始任务后立即加载)通过类型进行同步加载AB包
@@ -130,37 +129,36 @@ public class ResLoader : Singleton_UnMono<ResLoader>
     {
         return LoadAB_Sync<UnityEngine.Object>(abName, resName);
     }
-
     #endregion
 
     #region Resources加载模块
-    /// <summary>
-    /// 异步加载Resources 按类型
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="path"></param>
-    /// <param name="callback"></param>
-    /// <returns></returns>
-    public AsyncLoadTask LoadRes_Async<T>(string path, UnityAction<T> callback) where T : UnityEngine.Object
+    public void LoadRes_Async<T>(string path, UnityAction<T> callback) where T : UnityEngine.Object
+    {
+        AsyncLoadTask asyncLoadTask = CreateRes_Async<T>(path, callback);
+        asyncLoadTask?.StartAsyncLoad();
+    }
+    //创建Res异步任务
+    public AsyncLoadTask CreateRes_Async<T>(string path, UnityAction<T> callback) where T : UnityEngine.Object
     {
         //先任务是否第一次加载完成了吗
         if (!IsFirstAsyncLoad(path, callback))
         {
-            return dic_LoadedTask[path];
+            return null;
         }
-
         //第一次就新建任务
         AsyncLoadTask task = new AsyncLoadTask();
         task.IntiLoadOperation(resourcesLoader.reallyLoadAsync<T>(path, task));
         task.AddCallbackCommand(new LoadResAsyncCommand<T>(callback, task));
         //加载资源占位
         dic_LoadedRes.Add(path, null);
+        //记录到字典中
+        dic_LoadedTask.Add(path, task);
         //异步加载完成记录
         task.AddCallbackCommand(() =>
         {
             dic_LoadedRes[path] = task.ResInfo;
+            dic_LoadedTask.Remove(path);
         });
-        dic_LoadedTask.Add(path, task);
         return task;
     }
     /// <summary>
@@ -175,7 +173,7 @@ public class ResLoader : Singleton_UnMono<ResLoader>
         {
             if (dic_LoadedRes[path] != null)
                 return dic_LoadedRes[path].GetAsset<T>();
-            else Debug.LogError("获取资源失败，可能是正在进行异步加载中！，请通过异步获取");
+            else Debug.LogError($"获取资源{path}失败，可能是正在进行异步加载中！请通过异步获取");
         }
         return resourcesLoader.LoadSync<T>(path);
     }
@@ -189,32 +187,18 @@ public class ResLoader : Singleton_UnMono<ResLoader>
     {
         preloader.StartLoad();
     }
+
+    //预加载任务皆为 异步加载任务，可以把普通加载任务添加到预加载之中，到时候启动预加载就会一起加载了
     /// <summary>
     /// 创建预加载任务
     /// </summary>
-    public void CreatePreloadTask(string taskName, PreLoadInfo[] infos, Type type = null)
+    public void CreatePreloadTask(AsyncLoadTask task)
     {
-        PreloadResTask task = new PreloadResTask() { ResInfos = infos, taskName = taskName };
-        preloader.CreatePreLoadTask(task, type);
+        preloader.CreatePreLoadTask(task);
     }
-    public void CreatePreloadTask(PreloadResTask task, Type type = null)
+    public void CreatePreloadTaskFromExcel<T>(string name = null, main_Preloader.E_LoadType LoadType = main_Preloader.E_LoadType.AB) where T : DataBaseContainer
     {
-        preloader.CreatePreLoadTask(task, type);
-    }
-    /// <summary>
-    /// 加载某AB包中所有有关类型资源
-    /// </summary>
-    /// <param name="taskName"></param>
-    /// <param name="ABName"></param>
-    /// <param name="type">按类型加载，null为加载某AB包中所有资源</param>
-    public void CreatePreloadABTask(string taskName, string ABName, Type type = null)
-    {
-        preloader.waitLoadAssetBundle.Add(MonoManager.Instance.StartCoroutine(preloader.ReallyCreatePreloadABTask(taskName, ABName, type, abLoader)));
-    }
-
-    public void CreatePreloadFromExcel<T>(string name) where T : DataBaseContainer
-    {
-        preloader.PreloadFromExcel<T>(name);
+        preloader.PreloadFromExcel<T>(name, LoadType);
     }
     #endregion
 
@@ -229,9 +213,23 @@ public class ResLoader : Singleton_UnMono<ResLoader>
     private bool IsFirstAsyncLoad<T>(string key, UnityAction<T> callback = null) where T : UnityEngine.Object
     {
         //先判断是否是第一次加载某任务
-        if (!dic_LoadedTask.ContainsKey(key)) return true;
-        //创建任务用于判断
-        AsyncLoadTask task = dic_LoadedTask[key];
+        if (!dic_LoadedRes.ContainsKey(key)) return true;
+        //已经完事，直接用
+        if (!dic_LoadedTask.ContainsKey(key) && dic_LoadedRes[key] != null)
+        {
+            Debug.LogError("FUCK");
+            callback?.Invoke(dic_LoadedRes[key].Asset as T);
+            return false;
+        }
+        //没有完事，还在加载中情况，需要让它加载完后使用
+        else
+        {
+            //创建任务用于判断
+            AsyncLoadTask task = dic_LoadedTask[key];
+            task.AddCallbackCommand(new LoadResAsyncCommand<T>(callback, task));
+            return false;
+        }
+
         //编辑器逻辑
 #if UNITY_EDITOR
         //if (settingData.abLoadSetting.IsDebugABLoad && !task.isFinish )
@@ -243,16 +241,7 @@ public class ResLoader : Singleton_UnMono<ResLoader>
         //    return task;
         //}
 #endif
-        if (!task.isFinish)
-        {
-            task.AddCallbackCommand(new LoadResAsyncCommand<T>(callback, task));
-        }
-        //加载了就直接调用
-        else
-        {
-            callback?.Invoke(dic_LoadedTask[key].GetAsset<T>());
-        }
-        return false;
+
     }
     //使用编辑器加载时候记录资源
     private T EditorLoadABRes<T>(string abName, string resName, UnityAction<T> callback = null) where T : UnityEngine.Object
@@ -270,6 +259,8 @@ public class ResLoader : Singleton_UnMono<ResLoader>
         return res;
     }
 
-
+    public void Demo()
+    {
+    }
 
 }

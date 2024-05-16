@@ -66,13 +66,13 @@ public class AsyncLoadTask
             return MonoManager.Instance.StartCoroutine(operation);
         };
     }
-    public void StartAsyncLoad()
+    public Coroutine StartAsyncLoad()
     {
         if (LoadOperation == null)
         {
             Debug.LogError("任务开启失败，不存在要加载的资源");
-            return;
+            return null;
         }
-        LoadOperation?.Invoke();
+        return LoadOperation?.Invoke();
     }
 }

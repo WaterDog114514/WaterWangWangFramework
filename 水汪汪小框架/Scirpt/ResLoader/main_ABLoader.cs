@@ -92,7 +92,14 @@ class main_ABLoader
         foreach (string dependencyName in dependencies)
         {
             //加载过这个依赖包了，就跳过到下一个
-            if (dic_Bundle.ContainsKey(dependencyName)) continue;
+            if (dic_Bundle.ContainsKey(dependencyName))
+            {
+                //同时加载时候，防止卡Null
+                while (dic_Bundle[dependencyName] == null)
+                    yield return null;
+                
+                continue;
+            }
             //一开始异步加载 就记录 如果此时的记录中的值 是null 那证明这个ab包正在被异步加载
             dic_Bundle.Add(dependencyName, null);
             AssetBundleCreateRequest req = AssetBundle.LoadFromFileAsync(ABPath + dependencyName);
@@ -104,7 +111,7 @@ class main_ABLoader
     }
 
     //真正同步加载 多合一
-    public T ReallyLoadSync<T>(string abName, string resName ) where T : UnityEngine.Object
+    public T ReallyLoadSync<T>(string abName, string resName) where T : UnityEngine.Object
     {
         //加载依赖包
         LoadDependenciesAsset_Sync(abName);
@@ -143,7 +150,6 @@ class main_ABLoader
     public IEnumerator ReallyLoadAsync<T>(string abName, string resName, AsyncLoadTask task) where T : UnityEngine.Object
     {
         Res resInfo = null;
-
         //异步加载，先等异步加载依赖包完毕后再加载
         yield return MonoManager.Instance.StartCoroutine(LoadDependenciesAsset_Async(abName));
 
@@ -154,11 +160,15 @@ class main_ABLoader
             dic_Bundle.Add(abName, null);
             //加载AB包中的资源逻辑
             AssetBundleCreateRequest req = AssetBundle.LoadFromFileAsync(ABPath + abName);
-
             yield return req;
             //异步加载结束后 再替换之前的null  这时 不为null 就证明加载结束了
             dic_Bundle[abName] = req.assetBundle;
+            Debug.Log("矩阵完成");
         }
+        //同时加载时候，防止卡Null
+        while (dic_Bundle[abName] == null)
+            yield return null;
+
 
         //根据所要加载的东西分配不同唯一的资源信息类
 
@@ -171,6 +181,8 @@ class main_ABLoader
         //创建命令  预加载或回调为null，就不要调用啦
         //创建资源信息
         AssetBundleRequest abq = dic_Bundle[abName].LoadAssetAsync<T>(resName);
+
+
         resInfo = new Res(typeof(T));
         //加载进度更新逻辑
         while (!abq.isDone)
@@ -181,6 +193,8 @@ class main_ABLoader
 
         //完成加载
         yield return abq;
+
+        Debug.Log(abq.asset);
         resInfo.Asset = abq.asset as T;
         task.FinishTask(resInfo);
         //参数传入和调用
@@ -234,7 +248,7 @@ class main_ABLoader
 
     }
 
-    
+
 
 }
 
