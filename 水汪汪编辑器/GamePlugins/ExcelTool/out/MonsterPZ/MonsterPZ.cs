@@ -8,6 +8,6 @@ public class MonsterPZ
     public int hp;
     public int mp;
     public string desciption;
-    public string ArtPath;
+    public string ResPath;
 
 }

@@ -69,7 +69,7 @@ public class ResLoader : Singleton_UnMono<ResLoader>
             return null;
         }
 #endif
-        Debug.Log("jiangshi");
+
         //第一次就新建任务
         AsyncLoadTask task = new AsyncLoadTask();
         task.IntiLoadOperation(abLoader.ReallyLoadAsync<T>(abName, resName, task));
@@ -192,16 +192,24 @@ public class ResLoader : Singleton_UnMono<ResLoader>
     /// <summary>
     /// 创建预加载任务
     /// </summary>
-    public void CreatePreloadTask(AsyncLoadTask task)
+    public void CreatePreloadTask(AsyncLoadTask[] tasks)
     {
-        preloader.CreatePreLoadTask(task);
+        PreLoadTask preLoadTask = new PreLoadTask();
+        preLoadTask.TaskList.AddRange(tasks);
+        preloader.CreatePreLoadTask(preLoadTask);
     }
-    public void CreatePreloadTaskFromExcel<T>(string name = null, main_Preloader.E_LoadType LoadType = main_Preloader.E_LoadType.AB) where T : DataBaseContainer
+    public void CreatePreloadTaskFromExcel<T>(string ResPathName = "ResPath", UnityAction<Res[]> callback = null) where T : DataBaseContainer
     {
-        preloader.PreloadFromExcel<T>(name, LoadType);
+        //预加载总任务
+        string[] paths = GameExcelDataLoader.Instance.GetDataPropertyInfo<T>(ResPathName);
+        CreatePreloadTaskFromPaths(paths);
     }
     #endregion
-
+    //每个Excel表可以创建一个预加载总任务
+    public void CreatePreloadTaskFromPaths(string[] paths, UnityAction<Res[]> callback = null)
+    {
+        preloader.CreatePreloadTaskFromPaths(paths, callback);
+    }
 
     /// <summary>
     /// 判断是不是第一次执行异步加载
@@ -217,7 +225,6 @@ public class ResLoader : Singleton_UnMono<ResLoader>
         //已经完事，直接用
         if (!dic_LoadedTask.ContainsKey(key) && dic_LoadedRes[key] != null)
         {
-            Debug.LogError("FUCK");
             callback?.Invoke(dic_LoadedRes[key].Asset as T);
             return false;
         }

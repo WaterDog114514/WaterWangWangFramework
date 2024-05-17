@@ -118,7 +118,7 @@ public class EM_ExcelTool : Singleton_UnMono<EM_ExcelTool>
         string str = "using System.Collections.Generic;\n";
         //º”Ãÿ–‘
         str += "\n\n[System.Serializable]\n";
-        str += "public class " + table.TableName + "Container" + "\n{\n";
+        str += "public class " + table.TableName + "Container : DataBaseContainer" + "\n{\n";
         str += "\tpublic Dictionary<" + rowType[keyIndex].ToString() + ", " + table.TableName + ">";
         str += " dataDic = new " + "Dictionary<" + rowType[keyIndex].ToString() + ", " + table.TableName + ">();\n";
         str += "}";

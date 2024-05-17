@@ -14,6 +14,10 @@ public abstract class Obj
     /// 所属对象池标识，数据对象通过Type区分，游戏对象通过名字区分
     /// </summary>
     public abstract string PoolIdentity { get;}
+    /// <summary>
+    /// 所属池子对象组
+    /// </summary>
+    public string PoolGroup;
 
     /// <summary>
     /// 对象池最大数量

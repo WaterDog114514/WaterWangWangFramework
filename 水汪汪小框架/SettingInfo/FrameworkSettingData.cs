@@ -16,6 +16,7 @@ public class FrameworkSettingData : BaseSettingData
 {
     public ABLoadSettingData abLoadSetting;
     public LoadContainerSettingData loadContainerSetting;
+    public LoadPrefabSetting loadPrefabSetting;
     public override void IntiValue()
     {
         abLoadSetting = new ABLoadSettingData();
@@ -26,12 +27,18 @@ public class FrameworkSettingData : BaseSettingData
         abLoadSetting.ABEditorLoadPath = "Assets/Editor/ArtRes/";
 
         loadContainerSetting = new LoadContainerSettingData();
+        loadPrefabSetting = new LoadPrefabSetting()
+        {
+            ExcelArtPathName = "ResPath",
+            ExcelIDName = "PrefabID",
+            ExcelPoolGroupName = "PoolGroup"
+        };
 
     }
 
-    public override string DirectoryPath  => Application.dataPath + @"\水汪汪小框架\SettingInfo\Resources\"; 
+    public override string DirectoryPath => Application.dataPath + @"\水汪汪小框架\SettingInfo\Resources\";
     public override string DataName => "FrameworkSetting";
-   
+
 }
 /// <summary>
 /// AB包加载设置
@@ -71,8 +78,6 @@ public class ABLoadSettingData
     /// AB包游戏目录中读取路径
     /// </summary>
     public string ABLoadPath;
-
-
 }
 
 /// <summary>
@@ -84,7 +89,14 @@ public class LoadContainerSettingData
 
     public string DataPath;
     public string SuffixName;
-    public bool IsDebugStreamingAssetLoad =false;
+    public bool IsDebugStreamingAssetLoad = false;
 
 }
 
+[Serializable]
+public class LoadPrefabSetting
+{
+    public string ExcelArtPathName;
+    public string ExcelPoolGroupName;
+    public string ExcelIDName;
+}

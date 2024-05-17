@@ -5,22 +5,21 @@ using UnityEngine;
 /// <summary>
 /// 缓存池(对象池)模块 管理器
 /// </summary>
-
 public class PoolManager : Singleton_UnMono<PoolManager>
 {
-    /// <summary>
-    /// GetObj的时候从哪里拿对象 AB包和Resources选一个
-    /// </summary>
-    public enum ObjFrom
-    {
-        AB, Res
-    }
-
     /// <summary>
     /// 放抽屉的柜子
     /// </summary>
     public Transform root;
+    //抽屉管理，只有当使用编辑器开发采用哦
+    private Dictionary<string, Transform> dic_VolumeTransform = new Dictionary<string, Transform>();
+    /// <summary>
+    /// 所有池子管理
+    /// </summary>
     private Dictionary<string, Pool> PoolDic = new Dictionary<string, Pool>();
+
+    private Dictionary<string, PoolObjMaxSizeinfo> PoolGroup = new Dictionary<string, PoolObjMaxSizeinfo>();
+
     /// <summary>
     /// 程序启动时候，如果开启可视化，则创建root
     /// </summary>
@@ -33,12 +32,48 @@ public class PoolManager : Singleton_UnMono<PoolManager>
         }
 #endif
     }
+
+    private void IntiManager()
+    {
+        //初始化加载配置操作
+        PoolObjMaxSizeinfoContainer SettingData = GameExcelDataLoader.Instance.GetDataContainer<PoolObjMaxSizeinfoContainer>();
+        foreach (var key in SettingData.dataDic.Keys)
+        {
+            PoolGroup.Add(key, SettingData.dataDic[key]);
+        }
+    }
+
+    //创建物体时候检测
+    public void FirstCreate_PoolCheck(Obj obj)
+    {
+        if (!PoolDic.ContainsKey(obj.PoolIdentity))
+        {
+          //  CreateNewPool(obj);
+        }
+
+    }
+
+    //新创建一个池子
+    public void CreateNewPool(string Group,string Identity)
+    {
+        Pool pool = null;
+        switch (Group)
+        {
+            case "Circulate":
+                pool = new CircuPool();
+                break;
+            case "Expansion":
+            case "Fixed":
+                break;
+        }
+    }
+
     /// <summary>
     /// 拿东西的方法（若没有东西会自动创建)
     /// </summary>
     /// <param name="name">抽屉容器的名字</param>
     /// <returns>从缓存池中取出的对象</returns>
-    public Obj GetObj(string PoolIdentity, ObjFrom from = ObjFrom.AB)
+    public Obj GetObj(string PoolIdentity)
     {
         Obj obj = null;
         //有了的方法
@@ -48,27 +83,6 @@ public class PoolManager : Singleton_UnMono<PoolManager>
             return obj;
         }
 
-        //待写  需要读资源逻辑操作来判断加载类型
-
-//      //第一次创建池子操作
-//#if UNITY_EDITOR
-        
-//        Transform Volume = new GameObject(obj.name).transform;
-//        Volume.SetParent(root);
-//        Volume.name = obj.transform.name;
-//        PoolDic.Add(name, new CircuPool(obj, Volume));
-//#else
-//            PoolDic.Add(name, new CircuPool(obj, null));
-//#endif
-        //没有的时候 通过资源加载 去实例化出一个Obj
-        switch (from)
-        {
-            case ObjFrom.AB:
-                break;
-            case ObjFrom.Res:
-               // obj = Obj.CreateObj(Resources.Load<Object>(name));
-                break;
-        }
         return obj;
     }
 

@@ -10,18 +10,21 @@ public enum PoolType
     /// <summary>
     /// 循环使用版本的抽屉，会从使用中的对象的第一个取出来使用
     /// </summary>
-    circulate,
+    Circulate,
     /// <summary>
     /// 扩容的抽屉，会从使用中的对象的第一个取出来使用
     /// </summary>
-    expansion
+    Expansion,
+    /// <summary>
+    /// 定容池，固定的容量，当无空闲且满了，不会进行任何操作
+    /// </summary>
+    Fixed
 
 }
 //我们只需要处理没有空闲 记录使用逻辑 取消记录使用逻辑
 public abstract class Pool
 {
-    //抽屉
-   private Transform VolumeTransform;
+
     //用来存储抽屉中的对象 记录没有正在使用的对象
     private Queue<Obj> poolQueue = new Queue<Obj>();
     //数量
@@ -38,22 +41,16 @@ public abstract class Pool
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="volume">抽屉对象</param>
-    public Pool(GameObj obj, Transform volume)
+    public Pool()
     {
-        if (obj == null)
-        {
-            Debug.LogError("创建对象池时，对象为空");
-            return;
-        }
-        maxCount = obj.MaxCount;
-        this.VolumeTransform = volume;
+       
     }
     /// <summary>
     /// 从抽屉中取出对象，并移除抽屉中的对象
     /// </summary>
     /// <returns>想要的对象数据</returns>
 
-    public   Obj QuitPool()
+    public Obj QuitPool()
     {
         Obj obj = null;
         //根据池子类型取出不同逻辑
@@ -80,8 +77,8 @@ public abstract class Pool
         obj.EnterPoolCallback?.Invoke();
         //在开发时候，应该可看见的放入抽屉容器，好观察
 #if UNITY_EDITOR
-        if(obj is GameObj)
-        (obj as GameObj).transform.SetParent(VolumeTransform);
+      //  if (obj is GameObj)
+           // (obj as GameObj).transform.SetParent(VolumeTransform);
 #endif
 
     }
@@ -107,7 +104,7 @@ public class CircuPool : Pool
     //用来记录使用中的对象的 
     private List<Obj> usingQueue = new List<Obj>();
 
-    public CircuPool(GameObj obj, Transform volume) : base(obj, volume)
+    public CircuPool()
     {
     }
 

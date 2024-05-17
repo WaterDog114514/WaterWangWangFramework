@@ -23,7 +23,7 @@ public class Res
             Debug.LogError("获取资源失败，可能是正在进行异步加载中！，请通过异步获取");
             return default(T);
         }
-        if (typeof(T) != AssetType)
+        if (Asset.GetType()!= typeof(T))
         {
             Debug.LogError($"获取资源失败,此资源为{AssetType.Name}类型，尝试通过{typeof(T).Name}获取");
             return default(T);

@@ -8,9 +8,8 @@ public class DEMORead : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-  
-
-        ResLoader.Instance.CreatePreloadTaskFromExcel<MonsterPZContainer>("ArtPath");
+        PrefabLoaderManager.Instance.PreLoadPrefabFrmoExcel<MonsterPZContainer>();
+        //   ResLoader.Instance.CreatePreloadTaskFromExcel<MonsterPZContainer>("ArtPath");
         ResLoader.Instance.StartPreload();
         // ResLoader.Instance.CreatePreloadFromExcel<TestInfoContainer>("resPath");
     }
@@ -18,6 +17,6 @@ public class DEMORead : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

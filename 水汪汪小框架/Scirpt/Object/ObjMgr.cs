@@ -6,29 +6,40 @@ using UnityEngine;
 /// </summary>
 public class ObjectMgr : Singleton_UnMono<ObjectMgr>
 {
-    private Dictionary<int,Obj> dicObj = new Dictionary<int, Obj>();
+    private Dictionary<int, Obj> dicObj = new Dictionary<int, Obj>();
 
 
     private int tempID;
     private void AddObjToDic(Obj obj)
     {
         tempID++;
-        obj.ID= tempID;
+        obj.ID = tempID;
         dicObj.Add(obj.ID, obj);
     }
-    public GameObj CreateGameObject(GameObject prefab)
+
+    //创建预设体对象
+    public GameObj CreateGameObject(string prefabName)
     {
-        GameObject gameObj = Object.Instantiate(prefab);
+        PrefabInfo prefabInfo = PrefabLoaderManager.Instance.GetPrefabInfoFromName(prefabName);
+        return CreateGameObject(prefabInfo);
+    }
+    public GameObj CreateGameObject(int id)
+    {
+        PrefabInfo prefabInfo = PrefabLoaderManager.Instance.GetPrefabInfoFromID(id);
+        return(CreateGameObject(id));
+    }
+    public GameObj CreateGameObject(PrefabInfo info)
+    {
+        GameObject gameObj = Object.Instantiate(info.res);
         GameObj obj = new GameObj(gameObj);
         return obj;
     }
-    public GameObj CreateGameObject(GameObject prefab, Vector3 pos)
-    {
-        GameObj obj = CreateGameObject(prefab);
-        obj.transform.position = pos;
-        return obj;
-    }
 
+    /// <summary>
+    /// 创建一般数据对象
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public T CreateDataObject<T>() where T : DataObj, new()
     {
         T obj = new T();
@@ -48,7 +59,7 @@ public class ObjectMgr : Singleton_UnMono<ObjectMgr>
     /// </summary>
     public void ReallyDestroyObj(Obj obj)
     {
-        if(obj is GameObj)
+        if (obj is GameObj)
         {
             obj?.DestroyCallback();
         }

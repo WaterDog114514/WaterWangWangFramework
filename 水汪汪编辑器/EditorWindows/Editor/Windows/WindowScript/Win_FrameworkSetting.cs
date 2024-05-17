@@ -34,6 +34,9 @@ public class Win_FrameworkSetting : SingletonBaseWindow
         DrawExcelSetting();
         //AB包加载相关绘制
         DrawABSetting();
+        //预设体总设置
+        DrawPrefabLoadSetting();
+
 
     }
     private bool IsFoldExcel = false;
@@ -86,6 +89,28 @@ public class Win_FrameworkSetting : SingletonBaseWindow
                 SettingDataLoader.Instance.SaveData(settingData);
                 AssetDatabase.Refresh();
             }
+        }
+    }
+
+
+    bool IsFoldPrefab;
+    /// <summary>
+    /// 预设体加载设置
+    /// </summary>
+    private void DrawPrefabLoadSetting()
+    {
+        IsFoldPrefab = EditorGUILayout.Foldout(IsFoldPrefab, "Excel配置文件读取设置：");
+        if (!IsFoldPrefab)
+        {
+            //加载路径相关
+            GUILayout.Label("预设体加载设置", TitleStyle);
+            GUILayout.Label("请确保所有预设体配置文件Excel的必备属性名均为总设置的，此设置是为了统一而方便加载用的");
+
+            settingData.loadPrefabSetting.ExcelArtPathName = EditorGUILayout.TextField("预设体Excel的资源路径属性名：", settingData.loadPrefabSetting.ExcelArtPathName);
+
+            settingData.loadPrefabSetting.ExcelPoolGroupName = EditorGUILayout.TextField("预设体Excel的对象池组属性名：", settingData.loadPrefabSetting.ExcelPoolGroupName);
+
+            settingData.loadPrefabSetting.ExcelIDName = EditorGUILayout.TextField("预设体Excel的id属性名：", settingData.loadPrefabSetting.ExcelIDName);
         }
     }
 }
