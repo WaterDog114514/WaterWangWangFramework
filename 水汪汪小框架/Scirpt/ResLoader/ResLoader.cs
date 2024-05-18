@@ -194,6 +194,7 @@ public class ResLoader : Singleton_UnMono<ResLoader>
     /// </summary>
     public void CreatePreloadTask(AsyncLoadTask[] tasks)
     {
+       
         PreLoadTask preLoadTask = new PreLoadTask();
         preLoadTask.TaskList.AddRange(tasks);
         preloader.CreatePreLoadTask(preLoadTask);

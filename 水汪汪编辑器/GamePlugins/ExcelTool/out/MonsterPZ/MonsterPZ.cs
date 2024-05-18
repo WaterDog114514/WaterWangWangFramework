@@ -9,5 +9,6 @@ public class MonsterPZ
     public int mp;
     public string desciption;
     public string ResPath;
+    public string PoolGroup;
 
 }

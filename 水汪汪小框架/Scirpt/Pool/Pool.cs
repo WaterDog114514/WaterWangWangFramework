@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,7 +25,9 @@ public enum PoolType
 //我们只需要处理没有空闲 记录使用逻辑 取消记录使用逻辑
 public abstract class Pool
 {
-
+    //该池子同类的预设体信息，不够用时候会根据此来创建
+    protected string Identity;
+    protected Type ObjType;
     //用来存储抽屉中的对象 记录没有正在使用的对象
     private Queue<Obj> poolQueue = new Queue<Obj>();
     //数量
@@ -33,35 +36,50 @@ public abstract class Pool
     /// <summary>
     /// 是否有空闲的对象
     /// </summary>
-    public abstract bool IsHaveFreeObj { get; }
-
+    //用来记录使用中的对象的 
+    protected List<Obj> usingQueue = new List<Obj>();
+    public bool IsHaveFreeObj => usingQueue.Count < maxCount && poolQueue.Count > 0;
 
     /// <summary>
     /// 只有第一次创建抽屉时候才调用
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="volume">抽屉对象</param>
-    public Pool()
+    public Pool(int MaxCount, Obj Prefab)
     {
-       
+        this.maxCount = MaxCount;
+        Identity = Prefab.PoolIdentity;
+        ObjType = Prefab.GetType();
     }
     /// <summary>
     /// 从抽屉中取出对象，并移除抽屉中的对象
     /// </summary>
     /// <returns>想要的对象数据</returns>
 
-    public Obj QuitPool()
+    public Obj Operation_QuitPool()
     {
         Obj obj = null;
-        //根据池子类型取出不同逻辑
-        //循环：如果无空闲了，从第一个取出
+        //根据池子是否有空闲对象，来进行操作
         if (IsHaveFreeObj)
         {
+            //有就直接出，然后记录一下
             obj = poolQueue.Dequeue();
-            recordQuitPool(obj);
+            usingQueue.Add(obj);
         }
-        obj = NoFreeObjOperate();
-
+        //没有空闲对象，就进行无空闲的操作
+        else
+        {
+            //爆满了，抛给子类来处理
+            if (usingQueue.Count >= maxCount)
+                obj = Operation_PoolFull();
+            //对象池对象为0，但是使用没有爆满情况，就需要创建了
+            else
+            {
+                obj = Operation_CreatePoolObj();
+                usingQueue.Add(obj);
+            }
+        }
+        //操作成功后，进行回调出池子操作
         obj.QuitPoolCallback?.Invoke();
         //如果柜子里没有东西，且使用中的物体超过最大数量上限时候
         return obj;
@@ -70,68 +88,25 @@ public abstract class Pool
     /// 将使用完的对象放入抽屉
     /// </summary>
     /// <param name="obj"></param>
-    public void EnterPool(Obj obj)
+    public void Operation_EnterPool(Obj obj)
     {
-        recordEnterPoolObj(obj);
+        //记录一下
+        usingQueue.Remove(obj);
         poolQueue.Enqueue(obj);
+        //回调进入操作
         obj.EnterPoolCallback?.Invoke();
-        //在开发时候，应该可看见的放入抽屉容器，好观察
-#if UNITY_EDITOR
-      //  if (obj is GameObj)
-           // (obj as GameObj).transform.SetParent(VolumeTransform);
-#endif
-
     }
-    /// <summary>
-    /// 记录已经有一个物体进入池子，变为空闲状态
-    /// </summary>
-    public abstract void recordEnterPoolObj(Obj obj);
-    /// <summary>
-    /// 记录已经有一个物体已经出池子
-    /// </summary>
-    public abstract void recordQuitPool(Obj obj);
+
     /// <summary>
     /// 没有空闲物体的处理逻辑
     /// </summary>
-    public abstract Obj NoFreeObjOperate();
-}
-
-/// <summary>
-/// 循环对象池
-/// </summary>
-public class CircuPool : Pool
-{
-    //用来记录使用中的对象的 
-    private List<Obj> usingQueue = new List<Obj>();
-
-    public CircuPool()
+    public abstract Obj Operation_PoolFull();
+    //当需要创建时候就要这个了哦
+    public Obj Operation_CreatePoolObj()
     {
-    }
-
-    public override bool IsHaveFreeObj => usingQueue.Count < maxCount;
-
-    public override Obj NoFreeObjOperate()
-    {
-        if (usingQueue.Count <= 0)
-        {
-            Debug.LogError("错误！使用池数量为0");
-            return null;
-        }
-        //让正在使用的第一个来服用
-        Obj obj = usingQueue[0];
-        //刷新顺序，把它放到末尾
-        usingQueue.Remove(obj);
-        usingQueue.Add(obj);
-        return obj;
-    }
-
-    public override void recordEnterPoolObj(Obj obj)
-    {
-        usingQueue.Remove(obj);
-    }
-
-    public override void recordQuitPool(Obj obj)
-    {
-        usingQueue.Add(obj);
+        if (ObjType.IsSubclassOf(typeof(DataObj))) return ObjectManager.Instance.CreateDataObject(ObjType);
+        else return ObjectManager.Instance.CreateGameObject(
+            PrefabLoaderManager.Instance.GetPrefabInfoFromName(Identity)
+            );
     }
 }

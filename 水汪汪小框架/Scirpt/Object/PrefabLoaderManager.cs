@@ -47,11 +47,11 @@ public class PrefabLoaderManager : Singleton_UnMono<PrefabLoaderManager>
     /// <typeparam name="T">预设体所在表</typeparam>
     public void PreLoadPrefabFrmoExcel<T>() where T : DataBaseContainer
     {
-
         //先获取预设体表中的路径和对象池组以及唯一id
         string[] paths = GameExcelDataLoader.Instance.GetDataPropertyInfo<T>(SettingData.loadPrefabSetting.ExcelArtPathName);
         string[] groups = GameExcelDataLoader.Instance.GetDataPropertyInfo<T>(SettingData.loadPrefabSetting.ExcelPoolGroupName);
         string[] IDs = GameExcelDataLoader.Instance.GetDataPropertyInfo<T>(SettingData.loadPrefabSetting.ExcelIDName);
+
 
         GameObject[] LoadPrefab = new GameObject[paths.Length];
         ResLoader.Instance.CreatePreloadTaskFromPaths(paths, (resCollection) =>
@@ -62,7 +62,7 @@ public class PrefabLoaderManager : Singleton_UnMono<PrefabLoaderManager>
                 GameObject obj = resCollection[i].GetAsset<GameObject>();
                 if (obj == null)
                 {
-                    Debug.LogError($"加载预时，加载到非预设体资源！{resCollection[i].Asset}");
+                    Debug.LogError($"加载预时，加载到非预设体资源！{resCollection[i].Asset.name}");
                     continue;
                 }
                 //成功加载开始分类记录
@@ -81,7 +81,7 @@ public class PrefabLoaderManager : Singleton_UnMono<PrefabLoaderManager>
                 }
                 else
                 {
-                    info = new PoolPrefabInfo() { PoolGroup = groups[i] };
+                    info = new PoolPrefabInfo() { PoolGroup = groups[i] , identity = LoadPrefab[i].name };
                 }
                 info.res = LoadPrefab[i];
 
@@ -124,7 +124,10 @@ public class PrefabLoaderManager : Singleton_UnMono<PrefabLoaderManager>
 
 
     }
+    public void DemoTEst()
+    {
 
+    }
 }
 //预设体信息
 //预设体有UI预设体和普通游戏对象预设体之分
@@ -144,5 +147,6 @@ public class UnLimitedPrefabInfo : PrefabInfo
 /// </summary>
 public class PoolPrefabInfo : PrefabInfo
 {
+    public string identity;
     public string PoolGroup;
 }

@@ -101,13 +101,8 @@ public class main_Preloader
     {
         preloadResTasks.Add(task);
     }
-
-
-
-
     //暂时性的路径存储，防止重复加载
     private List<string> TempPath = new List<string>();
-
 
     public void CreatePreloadTaskFromPaths(string[] paths, UnityAction<Res[]> callback = null)
     {
@@ -119,7 +114,6 @@ public class main_Preloader
             //根据方式加载
             if (IsABOrResLoadFromPath(path))
             {
-                Debug.Log(path);
                 string abName = path.Substring(0, path.IndexOf('/'));
                 string resName = path.Replace(abName + "/", null);
                 AsyncLoadTask task = ResLoader.Instance.CreateAB_Async<UnityEngine.Object>(abName, resName, null);

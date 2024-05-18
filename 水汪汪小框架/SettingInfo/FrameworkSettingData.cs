@@ -31,7 +31,9 @@ public class FrameworkSettingData : BaseSettingData
         {
             ExcelArtPathName = "ResPath",
             ExcelIDName = "PrefabID",
-            ExcelPoolGroupName = "PoolGroup"
+            ExcelPoolGroupName = "PoolGroup",
+            DefaultGroupPoolSize = 15
+
         };
 
     }
@@ -99,4 +101,5 @@ public class LoadPrefabSetting
     public string ExcelArtPathName;
     public string ExcelPoolGroupName;
     public string ExcelIDName;
+    public int DefaultGroupPoolSize;
 }

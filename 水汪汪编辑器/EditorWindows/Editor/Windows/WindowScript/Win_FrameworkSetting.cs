@@ -111,6 +111,8 @@ public class Win_FrameworkSetting : SingletonBaseWindow
             settingData.loadPrefabSetting.ExcelPoolGroupName = EditorGUILayout.TextField("预设体Excel的对象池组属性名：", settingData.loadPrefabSetting.ExcelPoolGroupName);
 
             settingData.loadPrefabSetting.ExcelIDName = EditorGUILayout.TextField("预设体Excel的id属性名：", settingData.loadPrefabSetting.ExcelIDName);
+
+            settingData.loadPrefabSetting.DefaultGroupPoolSize = EditorGUILayout.IntField("对象池默认组上限：", settingData.loadPrefabSetting.DefaultGroupPoolSize);
         }
     }
 }

@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// 缓存池(对象池)模块 管理器
@@ -16,15 +19,19 @@ public class PoolManager : Singleton_UnMono<PoolManager>
     /// <summary>
     /// 所有池子管理
     /// </summary>
-    private Dictionary<string, Pool> PoolDic = new Dictionary<string, Pool>();
-
-    private Dictionary<string, PoolObjMaxSizeinfo> PoolGroup = new Dictionary<string, PoolObjMaxSizeinfo>();
-
+    private Dictionary<string, Pool> dic_Pool = new Dictionary<string, Pool>();
+    /// <summary>
+    /// 对象池预设，创建池子时候专用
+    /// </summary>
+    private Dictionary<string, PoolObjMaxSizeinfo> dic_PoolGroup = new Dictionary<string, PoolObjMaxSizeinfo>();
+    private FrameworkSettingData SettingData;
     /// <summary>
     /// 程序启动时候，如果开启可视化，则创建root
     /// </summary>
     public PoolManager()
     {
+        IntiManager();
+        SettingData = SettingDataLoader.Instance.LoadData<FrameworkSettingData>();
 #if UNITY_EDITOR
         if (root == null)
         {
@@ -32,40 +39,63 @@ public class PoolManager : Singleton_UnMono<PoolManager>
         }
 #endif
     }
-
     private void IntiManager()
     {
         //初始化加载配置操作
         PoolObjMaxSizeinfoContainer SettingData = GameExcelDataLoader.Instance.GetDataContainer<PoolObjMaxSizeinfoContainer>();
         foreach (var key in SettingData.dataDic.Keys)
         {
-            PoolGroup.Add(key, SettingData.dataDic[key]);
+            dic_PoolGroup.Add(key, SettingData.dataDic[key]);
         }
     }
-
-    //创建物体时候检测
-    public void FirstCreate_PoolCheck(Obj obj)
-    {
-        if (!PoolDic.ContainsKey(obj.PoolIdentity))
-        {
-          //  CreateNewPool(obj);
-        }
-
-    }
-
     //新创建一个池子
-    public void CreateNewPool(string Group,string Identity)
+    public Pool CreateNewPool(Obj obj)
     {
-        Pool pool = null;
-        switch (Group)
+        //没有名字和分组对象的组就创建默认的即可
+        if (dic_Pool.ContainsKey(obj.PoolIdentity))
         {
-            case "Circulate":
-                pool = new CircuPool();
-                break;
-            case "Expansion":
-            case "Fixed":
-                break;
+            Debug.LogError($"唯一对象池{obj.PoolIdentity}已存在，还试图创建它，请保证对象的池标记唯一性");
+            return null;
         }
+        //開始创建
+        Pool pool = null;
+        if (obj.PoolGroup == null || obj.PoolGroup == "" || !dic_PoolGroup.ContainsKey(obj.PoolGroup))
+        {
+
+            Debug.LogWarning($"{obj.PoolIdentity}没有对象池预设，已为他创建默认的预设的对象池，默认对象池上限为{SettingData.loadPrefabSetting.DefaultGroupPoolSize}");
+
+            //创建对象池
+            pool = new CircuPool(SettingData.loadPrefabSetting.DefaultGroupPoolSize, obj);
+        }
+        //有预设的情况下
+        else
+        {
+            //先获取预设
+            PoolObjMaxSizeinfo info = dic_PoolGroup[obj.PoolGroup];
+            switch (info.PoolType)
+            {
+                case "Circulate":
+                    pool = new CircuPool(info.GroupLimit, obj);
+                    break;
+                case "Expansion":
+                    pool = new ExtensionPool(info.GroupLimit, obj);
+                    break;
+                case "Fixed":
+                    pool = new FixedPool(info.GroupLimit, obj);
+                    break;
+            }
+        }
+        dic_Pool.Add(obj.PoolIdentity, pool);
+        return pool;
+
+    }
+    public GameObj GetGameObj(int id)
+    {
+        return GetGameObj(PrefabLoaderManager.Instance.GetPrefabInfoFromID(id));
+    }
+    public GameObj GetGameObj(string prefabName)
+    {
+        return GetGameObj(PrefabLoaderManager.Instance.GetPrefabInfoFromName(prefabName));
     }
 
     /// <summary>
@@ -73,16 +103,54 @@ public class PoolManager : Singleton_UnMono<PoolManager>
     /// </summary>
     /// <param name="name">抽屉容器的名字</param>
     /// <returns>从缓存池中取出的对象</returns>
-    public Obj GetObj(string PoolIdentity)
+    public GameObj GetGameObj(PrefabInfo info)
     {
-        Obj obj = null;
-        //有了的方法
-        if (PoolDic.ContainsKey(PoolIdentity))
+        GameObj obj = null;
+        if (info is UnLimitedPrefabInfo)
         {
-            obj = PoolDic[PoolIdentity].QuitPool();
-            return obj;
+            Debug.LogError($"获取对象失败，该对象{info.res.name}不受对象池约束");
+            return null;
         }
-
+        //有了的方法 直接从池子拿
+        if (dic_Pool.ContainsKey((info as PoolPrefabInfo).identity))
+        {
+            obj = dic_Pool[(info as PoolPrefabInfo).identity].Operation_QuitPool() as GameObj;
+        }
+        //没有就先创建物体，然后根据物体创建对象池
+        else
+        {
+            obj = ObjectManager.Instance.CreateGameObject(info);
+            Pool pool = CreateNewPool(obj);
+            //放取一波记录一下
+            pool.Operation_EnterPool(obj);
+            obj = pool.Operation_QuitPool() as GameObj;
+        }
+        return obj;
+    }
+    //安全的得到物体,取到物体才执行操作
+    public void GetGameObjSafety(PrefabInfo info, UnityAction<GameObj> callback)
+    {
+        GameObj Obj = GetGameObj(info);
+        if(Obj != null) callback?.Invoke(Obj);
+    }
+    public void GetGameObjSafety(string prefabName, UnityAction<GameObj> callback)
+    {
+        GameObj Obj = GetGameObj(PrefabLoaderManager.Instance.GetPrefabInfoFromName(prefabName));
+        if (Obj != null) callback?.Invoke(Obj);
+    }
+    public DataObj GetDataObj(Type type)
+    {
+        DataObj obj = null;
+        //有了的方法
+        if (dic_Pool.ContainsKey(type.Name))
+        {
+            obj = dic_Pool[type.Name].Operation_QuitPool() as DataObj;
+        }
+        //没有就通过全局对象管理器来创建，它会创建池子一起的
+        else
+        {
+            obj = ObjectManager.Instance.CreateDataObject(type);
+        }
         return obj;
     }
 
@@ -92,27 +160,23 @@ public class PoolManager : Singleton_UnMono<PoolManager>
     /// <param name="obj"></param>
     public void DestroyObj(Obj obj)
     {
-        if (!PoolDic.ContainsKey(obj.PoolIdentity))
+        if (!dic_Pool.ContainsKey(obj.PoolIdentity))
         {
             Debug.LogWarning("移除的不是缓存池对象！！");
             return;
         }
-        PoolDic[obj.PoolIdentity].EnterPool(obj);
+        dic_Pool[obj.PoolIdentity].Operation_EnterPool(obj);
     }
     /// <summary>
     /// 过场景时候清除数据
     /// </summary>
     public void Clear()
     {
-        PoolDic.Clear();
+        dic_Pool.Clear();
         root = null;
     }
 
-
-    /// <summary>
-    /// 将对象压入缓存池时候进行的操作
-    /// </summary>
-    private void PullObjToPoolOperation(Obj obj)
+    public void DEMOTEST()
     {
 
     }
