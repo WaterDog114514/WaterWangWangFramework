@@ -13,7 +13,9 @@ public class GameObj : Obj
     /// 实际游戏对象
     /// </summary>
     private GameObject Instance;
-    public GameObj(GameObject Instance,UnityAction IntiCallback = null)
+    public GameObject gameObject => Instance.gameObject;
+
+    public GameObj(GameObject Instance, UnityAction IntiCallback = null)
     {
         if (Instance == null)
             Debug.LogError("实例化对象时候对象为null！");
@@ -41,6 +43,14 @@ public class GameObj : Obj
     public Transform transform => Instance.transform;
     public string name => Instance.name;
 
+
+    /// <summary>
+    /// 浅销毁，把他放进对象池里
+    /// </summary>
+    public void Destroy()
+    {
+        ObjectManager.Instance.DestroyObj(this);
+    }
     public override string PoolIdentity => name;
 
     public T GetComponent<T>() where T : Component

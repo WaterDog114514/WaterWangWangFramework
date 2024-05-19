@@ -25,11 +25,19 @@ public enum PoolType
 //我们只需要处理没有空闲 记录使用逻辑 取消记录使用逻辑
 public abstract class Pool
 {
+    //开发时监听专用
+#if UNITY_EDITOR
+    public Queue<Obj> PoolQueue => poolQueue;
+    public List<Obj> UsingQueue => usingQueue;
+
+#endif
+
+
     //该池子同类的预设体信息，不够用时候会根据此来创建
     protected string Identity;
     protected Type ObjType;
     //用来存储抽屉中的对象 记录没有正在使用的对象
-    private Queue<Obj> poolQueue = new Queue<Obj>();
+    protected Queue<Obj> poolQueue = new Queue<Obj>();
     //数量
     public int Count => poolQueue.Count;
     public int maxCount;
@@ -39,7 +47,8 @@ public abstract class Pool
     //用来记录使用中的对象的 
     protected List<Obj> usingQueue = new List<Obj>();
     public bool IsHaveFreeObj => usingQueue.Count < maxCount && poolQueue.Count > 0;
-
+    //满了吗
+    public bool IsFull => usingQueue.Count + poolQueue.Count >= maxCount;
     /// <summary>
     /// 只有第一次创建抽屉时候才调用
     /// </summary>
@@ -71,7 +80,7 @@ public abstract class Pool
         {
             //爆满了，抛给子类来处理
             if (usingQueue.Count >= maxCount)
-                obj = Operation_PoolFull();
+                obj = Operation_QuitObjPoolFull();
             //对象池对象为0，但是使用没有爆满情况，就需要创建了
             else
             {
@@ -90,17 +99,31 @@ public abstract class Pool
     /// <param name="obj"></param>
     public void Operation_EnterPool(Obj obj)
     {
-        //记录一下
-        usingQueue.Remove(obj);
-        poolQueue.Enqueue(obj);
-        //回调进入操作
-        obj.EnterPoolCallback?.Invoke();
+        //外来人口想要进池子，就先判断是不是爆满
+        if (!usingQueue.Contains(obj) && IsFull)
+        {
+            //给子类处理爆满入栈操作
+            Operation_EnterObjPoolFull(obj);
+        }
+        else
+        {
+            //记录一下
+            usingQueue.Remove(obj);
+            poolQueue.Enqueue(obj);
+            //回调进入操作
+            obj.EnterPoolCallback?.Invoke();
+        }
+
     }
 
+
+    // 没有空闲物体的处理逻辑
+    public abstract Obj Operation_QuitObjPoolFull();
     /// <summary>
-    /// 没有空闲物体的处理逻辑
+    /// 满了放东西操作
     /// </summary>
-    public abstract Obj Operation_PoolFull();
+    /// <param name="obj"></param>
+    public abstract void Operation_EnterObjPoolFull(Obj obj);
     //当需要创建时候就要这个了哦
     public Obj Operation_CreatePoolObj()
     {
@@ -109,4 +132,6 @@ public abstract class Pool
             PrefabLoaderManager.Instance.GetPrefabInfoFromName(Identity)
             );
     }
+
+
 }

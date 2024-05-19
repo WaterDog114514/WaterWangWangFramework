@@ -8,15 +8,21 @@ public class ExtensionPool : Pool
     {
     }
 
-    public override Obj Operation_PoolFull()
+    public override Obj Operation_QuitObjPoolFull()
     {
-        //扩容操作
         maxCount++;
-        Debug.Log("已经扩容，当前容量:"+maxCount);
+        Debug.Log("已经扩容，当前容量:" + maxCount);
         Obj obj = Operation_CreatePoolObj();
         usingQueue.Add(obj);
         return obj;
     }
 
-
+    public override void Operation_EnterObjPoolFull(Obj obj)
+    {
+        //扩容操作
+        maxCount++;
+        poolQueue.Enqueue(obj);
+        //回调进入操作
+        obj.EnterPoolCallback?.Invoke();
+    }
 }

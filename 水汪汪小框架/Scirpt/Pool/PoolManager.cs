@@ -10,12 +10,7 @@ using UnityEngine.Events;
 /// </summary>
 public class PoolManager : Singleton_UnMono<PoolManager>
 {
-    /// <summary>
-    /// 放抽屉的柜子
-    /// </summary>
-    public Transform root;
-    //抽屉管理，只有当使用编辑器开发采用哦
-    private Dictionary<string, Transform> dic_VolumeTransform = new Dictionary<string, Transform>();
+
     /// <summary>
     /// 所有池子管理
     /// </summary>
@@ -25,6 +20,18 @@ public class PoolManager : Singleton_UnMono<PoolManager>
     /// </summary>
     private Dictionary<string, PoolObjMaxSizeinfo> dic_PoolGroup = new Dictionary<string, PoolObjMaxSizeinfo>();
     private FrameworkSettingData SettingData;
+
+    //开发可视化专用
+#if UNITY_EDITOR
+    public Dictionary<string, Pool> Dic_Pool => dic_Pool;
+    /// <summary>
+    /// 放抽屉的柜子
+    /// </summary>
+    public Transform root;
+    //抽屉管理，只有当使用编辑器开发采用哦
+    private Dictionary<string, Transform> dic_VolumeTransform = new Dictionary<string, Transform>();
+#endif
+
     /// <summary>
     /// 程序启动时候，如果开启可视化，则创建root
     /// </summary>
@@ -131,7 +138,7 @@ public class PoolManager : Singleton_UnMono<PoolManager>
     public void GetGameObjSafety(PrefabInfo info, UnityAction<GameObj> callback)
     {
         GameObj Obj = GetGameObj(info);
-        if(Obj != null) callback?.Invoke(Obj);
+        if (Obj != null) callback?.Invoke(Obj);
     }
     public void GetGameObjSafety(string prefabName, UnityAction<GameObj> callback)
     {
@@ -162,10 +169,18 @@ public class PoolManager : Singleton_UnMono<PoolManager>
     {
         if (!dic_Pool.ContainsKey(obj.PoolIdentity))
         {
-            Debug.LogWarning("移除的不是缓存池对象！！");
+            //没有就创建再放
+            Pool pool = CreateNewPool(obj);
+            //放取一波记录一下
+            pool.Operation_EnterPool(obj);
             return;
         }
-        dic_Pool[obj.PoolIdentity].Operation_EnterPool(obj);
+        if (!dic_Pool[obj.PoolIdentity].IsFull)
+            dic_Pool[obj.PoolIdentity].Operation_EnterPool(obj);
+        else
+        {
+            Debug.Log($"缓存池已达到上限，{obj}改为使用深度销毁");
+        }
     }
     /// <summary>
     /// 过场景时候清除数据

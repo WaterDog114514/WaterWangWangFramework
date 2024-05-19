@@ -7,14 +7,8 @@ using UnityEngine;
 /// </summary>
 public class ObjectManager : Singleton_UnMono<ObjectManager>
 {
-    private Dictionary<int, Obj> dicObj = new Dictionary<int, Obj>();
+   // private Dictionary<int, Obj> dicObj = new Dictionary<int, Obj>();
     private int tempID;
-    private void AddObjToDic(Obj obj)
-    {
-        tempID++;
-        obj.ID = tempID;
-        dicObj.Add(obj.ID, obj);
-    }
 
     //创建预设体对象
     public GameObj CreateGameObject(string prefabName)
@@ -38,6 +32,7 @@ public class ObjectManager : Singleton_UnMono<ObjectManager>
             gameObj.name = (info as PoolPrefabInfo).identity;
             obj.PoolGroup = (info as PoolPrefabInfo).PoolGroup;
         }
+        gameObj.AddComponent<GameObjectInstance>().Inti(obj);
         return obj;
     }
 
@@ -79,7 +74,6 @@ public class ObjectManager : Singleton_UnMono<ObjectManager>
         {
             obj?.DestroyCallback();
         }
-        dicObj.Remove(obj.ID);
     }
 }
 

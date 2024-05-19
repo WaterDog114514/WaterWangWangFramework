@@ -33,4 +33,6 @@ public static class GameObjExtensionMethod
         obj.transform.localScale = Scale;
         return obj;
     }
+
+
 }

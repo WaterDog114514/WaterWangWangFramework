@@ -12,7 +12,7 @@ public class CircuPool : Pool
     {
     }
 
-    public override Obj Operation_PoolFull()
+    public override Obj Operation_QuitObjPoolFull()
     {
         if (usingQueue.Count <= 0)
         {
@@ -27,4 +27,9 @@ public class CircuPool : Pool
         return obj;
     }
 
+    public override void Operation_EnterObjPoolFull(Obj obj)
+    {
+        //循环池 直接删除外来人口
+        ObjectManager.Instance.ReallyDestroyObj(obj);
+    }
 }
