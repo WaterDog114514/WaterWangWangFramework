@@ -8,7 +8,7 @@ using UnityEngine.Events;
 /// <summary>
 /// 缓存池(对象池)模块 管理器
 /// </summary>
-public class PoolManager : Singleton_UnMono<PoolManager>
+public class PoolManager 
 {
 
     /// <summary>
@@ -96,14 +96,7 @@ public class PoolManager : Singleton_UnMono<PoolManager>
         return pool;
 
     }
-    public GameObj GetGameObj(int id)
-    {
-        return GetGameObj(PrefabLoaderManager.Instance.GetPrefabInfoFromID(id));
-    }
-    public GameObj GetGameObj(string prefabName)
-    {
-        return GetGameObj(PrefabLoaderManager.Instance.GetPrefabInfoFromName(prefabName));
-    }
+
 
     /// <summary>
     /// 拿东西的方法（若没有东西会自动创建)
@@ -160,7 +153,7 @@ public class PoolManager : Singleton_UnMono<PoolManager>
         }
         return obj;
     }
-
+ 
     /// <summary>
     /// 将使用中的对象“销毁”，加入缓存池
     /// </summary>

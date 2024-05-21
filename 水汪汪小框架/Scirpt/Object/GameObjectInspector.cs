@@ -26,10 +26,10 @@ public class GameObjectInspector : Editor
 
         EditorGUILayout.TextField("对象ID：", gameObj.ID.ToString());
         //对象池信息
-        string PoolInfo = PoolManager.Instance.Dic_Pool.ContainsKey(gameObj.PoolIdentity) ? gameObj.PoolIdentity : "暂未创建池子";
-        string PoolLimit = PoolManager.Instance.Dic_Pool.ContainsKey(gameObj.PoolIdentity) ? $"当前空闲：{PoolManager.Instance.Dic_Pool[gameObj.PoolIdentity].PoolQueue.Count}  使用中：{PoolManager.Instance.Dic_Pool[gameObj.PoolIdentity].UsingQueue.Count}  最大上限：{PoolManager.Instance.Dic_Pool[gameObj.PoolIdentity].maxCount}" : "暂未创建池子";
-        EditorGUILayout.TextField("对象池：", PoolInfo);
-        EditorGUILayout.LabelField("对象池使用：", PoolLimit);
+        //string PoolInfo = PoolManager.Instance.Dic_Pool.ContainsKey(gameObj.PoolIdentity) ? gameObj.PoolIdentity : "暂未创建池子";
+        //string PoolLimit = PoolManager.Instance.Dic_Pool.ContainsKey(gameObj.PoolIdentity) ? $"当前空闲：{PoolManager.Instance.Dic_Pool[gameObj.PoolIdentity].PoolQueue.Count}  使用中：{PoolManager.Instance.Dic_Pool[gameObj.PoolIdentity].UsingQueue.Count}  最大上限：{PoolManager.Instance.Dic_Pool[gameObj.PoolIdentity].maxCount}" : "暂未创建池子";
+        //EditorGUILayout.TextField("对象池：", PoolInfo);
+        //EditorGUILayout.LabelField("对象池使用：", PoolLimit);
 
     }
 }

@@ -7,8 +7,13 @@ using UnityEngine;
 /// </summary>
 public class ObjectManager : Singleton_UnMono<ObjectManager>
 {
-   // private Dictionary<int, Obj> dicObj = new Dictionary<int, Obj>();
-    private int tempID;
+    // private Dictionary<int, Obj> dicObj = new Dictionary<int, Obj>();
+    private PoolManager poolManager;
+    public ObjectManager()
+    {
+        poolManager = new PoolManager();
+    }
+
 
     //创建预设体对象
     public GameObj CreateGameObject(string prefabName)
@@ -26,6 +31,8 @@ public class ObjectManager : Singleton_UnMono<ObjectManager>
         //原始创建
         GameObject gameObj = UnityEngine.Object.Instantiate(info.res);
         GameObj obj = new GameObj(gameObj);
+        //给予id
+        GiveObjID(obj);
         //只有对象池约束才要
         if (info is PoolPrefabInfo)
         {
@@ -36,6 +43,31 @@ public class ObjectManager : Singleton_UnMono<ObjectManager>
         return obj;
     }
 
+    //从对象池中获得物体
+    public GameObj GetGameObjFromPool(PrefabInfo info)
+    {
+        return poolManager.GetGameObj(info);
+    }
+    public GameObj GetGameObjFromPool(int id)
+    {
+        return poolManager.GetGameObj(PrefabLoaderManager.Instance.GetPrefabInfoFromID(id));
+    }
+    public GameObj GetGameObjFromPool(string PrefabName)
+    {
+        return poolManager.GetGameObj(PrefabLoaderManager.Instance.GetPrefabInfoFromName(PrefabName));
+    }
+
+    //获取数据对象从对象池之中
+    public T getDataObjFromPool<T>() where T : DataObj
+    { 
+        return poolManager.GetDataObj(typeof(T)) as T;
+    }
+
+    public DataObj getDataObjFromPool(Type type)  
+    {
+        return poolManager.GetDataObj(type);
+    }
+
     /// <summary>
     /// 创建一般数据对象
     /// </summary>
@@ -43,8 +75,7 @@ public class ObjectManager : Singleton_UnMono<ObjectManager>
     /// <returns></returns>
     public T CreateDataObject<T>() where T : DataObj, new()
     {
-        T obj = new T();
-        return obj;
+        return CreateDataObject(typeof(T)) as T; 
     }
     public DataObj CreateDataObject(Type type)
     {
@@ -54,7 +85,18 @@ public class ObjectManager : Singleton_UnMono<ObjectManager>
             return null;
         }
         DataObj obj = Activator.CreateInstance(type) as DataObj;
+        //给予ID
+        GiveObjID(obj);
         return obj;
+    }
+
+    private int CurrentNewObjID=0;
+    /// <summary>
+    /// 给予新对象唯一ID，一般创建时候使用
+    /// </summary>
+    private void GiveObjID(Obj obj)
+    {
+       obj.ID = CurrentNewObjID++;
     }
 
     /// <summary>
@@ -63,7 +105,7 @@ public class ObjectManager : Singleton_UnMono<ObjectManager>
     /// <param name="obj"></param>
     public void DestroyObj(Obj obj)
     {
-        PoolManager.Instance.DestroyObj(obj);
+        poolManager.DestroyObj(obj);
     }
     /// <summary>
     /// 深度销毁，将其完全从内存中移除
