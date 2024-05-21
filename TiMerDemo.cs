@@ -5,38 +5,54 @@ using UnityEngine;
 public class TiMerDemo : MonoBehaviour
 {
     TimerObj timerObj;
-    TimerObj timerObj2;
     // Start is called before the first frame update
     void Start()
     {
-        timerObj = TimerMgr.Instance.StartNewTimer(TimerObj.TimerType.ScaleTime, 6, () =>
-        {
-            print("完成啦");
-        }).SetIntervalCallback(0.15F, () =>
-        {
-            print("剩余时间：" + timerObj.GetSurplusTime);
-        });
-        //int i = 0;
-        //timerObj2 = TimerMgr.Instance.StartNewTimer(TimerObj.TimerType.ScaleTime, 3, () => {
-        //    print("完成啦");
-        //}).SetIntervalCallback(0.5F, () => {
-        //    print("烈焰风暴：" + i++);
-        //});
+
+        timerObj = TimerMgr.Instance.StartNewTimer(TimerObj.TimerType.ScaleTime, 53, () =>
+             {
+             }).SetIntervalCallback(0.35F, () =>
+             {
+                 print("冰霜魔法：" + timerObj.GetSurplusTime);
+             });
+
+
     }
 
     private void OnGUI()
     {
+        Time.timeScale = GUILayout.HorizontalSlider(Time.timeScale, 0, 5);
         if (GUILayout.Button("开刀"))
         {
             TimerMgr.Instance.StopTimer(timerObj.ID);
-        }   if (GUILayout.Button("DADAA刀"))
+        }
+        if (GUILayout.Button("DADAA刀"))
         {
             TimerMgr.Instance.StartTimer(timerObj.ID);
         }
+
+        if (GUILayout.Button("Test"))
+        {
+            ObjectManager.Instance.poolManager.DEMOTEST();
+        }
     }
+
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+}
+class suten
+{
+    string name;
+    public suten(string aa) { name = aa; }
+    public IEnumerator wait()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.25f);
+            Debug.Log(name);
+        }
     }
 }

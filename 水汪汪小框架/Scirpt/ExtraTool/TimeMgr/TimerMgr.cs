@@ -14,6 +14,8 @@ public class TimerMgr : Singleton_UnMono<TimerMgr>
     }
     //计时容器
     private Dictionary<int, TimerObj> dic_TimerObj = new Dictionary<int, TimerObj>();
+    //正在启用中的计时器
+    private Dictionary<int, Coroutine> dic_TimerCoroutine = new Dictionary<int, Coroutine>();
     public float UpdateIntervalTime;
     public TimerObj StartNewTimer(TimerObj.TimerType type, float totaltime, UnityAction Callback = null)
     {
@@ -30,13 +32,9 @@ public class TimerMgr : Singleton_UnMono<TimerMgr>
     public void IntiMgr()
     {
         UpdateIntervalTime = 0.1f;
-        waitSeconds = new WaitForSeconds(UpdateIntervalTime);
-        waitSecondsRealtime = new WaitForSecondsRealtime(UpdateIntervalTime);
-    }
 
-    public WaitForSeconds waitSeconds;
-    public WaitForSecondsRealtime waitSecondsRealtime;
-    //移除计时器
+    }
+    //移除计时器，让其进入缓存池
     public void DestroyTimer(TimerObj obj)
     {
         StopTimer(obj.ID);
@@ -60,11 +58,23 @@ public class TimerMgr : Singleton_UnMono<TimerMgr>
     public void StartTimer(int id)
     {
         //开两次问题，需要声明dic求解
-        MonoManager.Instance.StartCoroutine(dic_TimerObj[id].UpdateTime());
+        if (!dic_TimerCoroutine.ContainsKey(id))
+            dic_TimerCoroutine.Add(id, MonoManager.Instance.StartCoroutine(dic_TimerObj[id].UpdateTime()));
+        else
+        {
+            Debug.LogWarning($"计时器(id:{id})已经正在计时，请勿重复开启计时！！");
+        }
+
     }
     public void StopTimer(int id)
     {
-        dic_TimerObj[id].Stop();
+        if (!dic_TimerCoroutine.ContainsKey(id))
+        {
+            Debug.LogWarning($"计时器(id:{id})不存在或已停止，请勿重复停止计时！！");
+            return;
+        }
+        MonoManager.Instance.StopCoroutine(dic_TimerCoroutine[id]);
+        dic_TimerCoroutine.Remove(id);
     }
 }
 

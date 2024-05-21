@@ -96,8 +96,6 @@ public class PoolManager
         return pool;
 
     }
-
-
     /// <summary>
     /// 拿东西的方法（若没有东西会自动创建)
     /// </summary>

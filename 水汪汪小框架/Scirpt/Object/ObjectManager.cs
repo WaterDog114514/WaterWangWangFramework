@@ -8,7 +8,7 @@ using UnityEngine;
 public class ObjectManager : Singleton_UnMono<ObjectManager>
 {
     // private Dictionary<int, Obj> dicObj = new Dictionary<int, Obj>();
-    private PoolManager poolManager;
+    public PoolManager poolManager;
     public ObjectManager()
     {
         poolManager = new PoolManager();
