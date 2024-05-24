@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2743749709
+CRC: 3253107856
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 8faf52dbb3ae66cc9f7e22ebb68ef544
+    Hash: 07554eaad6a7788a76a5933a15ded6ed
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 21b6b08b94287a64c9fe10e94f1a095f
+    Hash: 0a53886151d032980443e2c7bc38f3b3
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -18,9 +18,9 @@ ClassTypes:
 - Class: 48
   Script: {instanceID: 0}
 - Class: 114
-  Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
 - Class: 114
@@ -39,10 +39,20 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.PersistentCallGroup
 - AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.AnimationTriggers
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Button/ButtonClickedEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.ColorBlock
+- AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.FontData
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Navigation
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.SpriteState
 Assets:
 - Assets/Editor/ArtRes/ui_prefab/DEMOPANEL.prefab
 Dependencies:
-- "B:/UnityProject/\u6C34\u6C6A\u6C6A\u7684\u5C0F\u6846\u67B6/AssetBundles/PC/ui_image"
+- "D:/UnityProject/\u6C34\u6C6A\u6C6A\u5C0F\u6846\u67B6/AssetBundles/PC/ui_image"

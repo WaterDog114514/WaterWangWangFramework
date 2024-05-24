@@ -7,7 +7,8 @@ public class UIDEMO : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        UIManager.Instance.PreLoadUIPanel("ui_prefab","DEMOPANEL");
+        ResLoader.Instance.StartPreload();
     }
     private void OnGUI()
     {

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4034025176
+CRC: 3503901161
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 71b826ae55d6c0b0c0cee7e5d4c662af
+    Hash: 1ca47ea43e45bcb13497e953f168c33c
   TypeTreeHash:
     serializedVersion: 2
     Hash: e806a8a1e2ff788ee4da5e15a25df5b6
@@ -30,5 +30,5 @@ Assets:
 - Assets/Editor/ArtRes/prpr/OO2.prefab
 - Assets/Editor/ArtRes/prpr/OO1.prefab
 Dependencies:
-- "B:/UnityProject/\u6C34\u6C6A\u6C6A\u7684\u5C0F\u6846\u67B6/AssetBundles/PC/animegirls"
-- "B:/UnityProject/\u6C34\u6C6A\u6C6A\u7684\u5C0F\u6846\u67B6/AssetBundles/PC/basicbandit"
+- "D:/UnityProject/\u6C34\u6C6A\u6C6A\u5C0F\u6846\u67B6/AssetBundles/PC/animegirls"
+- "D:/UnityProject/\u6C34\u6C6A\u6C6A\u5C0F\u6846\u67B6/AssetBundles/PC/basicbandit"

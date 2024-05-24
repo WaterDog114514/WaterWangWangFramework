@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 /// <summary>
 /// 层级枚举
@@ -49,13 +47,20 @@ public class UIManager : Singleton_UnMono<UIManager>
     /// <summary>
     /// 用于存储所有的面板对象
     /// </summary>
-    private Dictionary<string, UIBasePanelInfo> panelDic = new Dictionary<string, UIBasePanelInfo>();
+    private Dictionary<string, UIBasePanel> panelDic = new Dictionary<string, UIBasePanel>();
+    private FrameworkSettingData SettingData;
+    public UIManager()
+    {
+        IntiManager();
+    }
 
     /// <summary>
     /// 初始化管理器，实例化出基本UI控件
     /// </summary>
     public void IntiManager()
     {
+        //加载配置文件
+        SettingData = SettingDataLoader.Instance.LoadData<FrameworkSettingData>();
         //动态创建唯一的Canvas和EventSystem（摄像机）
         uiCamera = GameObject.Instantiate(ResLoader.Instance.LoadRes_Sync<GameObject>("UI/UICamera")).GetComponent<Camera>();
 
@@ -77,13 +82,32 @@ public class UIManager : Singleton_UnMono<UIManager>
         Object.DontDestroyOnLoad(uiCanvas.gameObject);
         Object.DontDestroyOnLoad(uiCamera.gameObject);
     }
-
-
-
-
-    public UIManager()
+    /// <summary>
+    /// 预加载面板
+    /// </summary>
+    /// <param name="abname"></param>
+    /// <param name="panels"></param>
+    public void PreLoadUIPanel(string abname, params string[] panelNames)
     {
-        IntiManager();
+        string[] paths = new string[panelNames.Length];
+        for (int i = 0; i < panelNames.Length; i++)
+        {
+            if (!panelDic.ContainsKey(panelNames[i]))
+                panelDic.Add(panelNames[i], null);
+            paths[i] = abname + "/" + panelNames[i];
+
+        }
+        ResLoader.Instance.CreatePreloadTaskFromPaths(paths, (Panels) =>
+        {
+            for (int i = 0; i < Panels.Length; i++)
+            {
+                GameObject panelObj = Object.Instantiate(Panels[i].Asset as GameObject);
+                UIBasePanel panelInfo = (panelObj).GetComponent<UIBasePanel>();
+                panelDic[panelInfo.GetType().Name] = panelInfo;
+                panelInfo.HideMe();
+            }
+        });
+
     }
 
     /// <summary>
@@ -115,32 +139,18 @@ public class UIManager : Singleton_UnMono<UIManager>
     /// <param name="layer">面板显示的层级</param>
     /// <param name="callBack">由于可能是异步加载 因此通过委托回调的形式 将加载完成的面板传递出去进行使用</param>
     /// <param name="isSync">是否采用同步加载 默认为false</param>
-    public void ShowPanel<T>(E_UILayer layer = E_UILayer.Middle, UnityAction<T> callBack = null, bool isSync = false) where T : UIBasePanel
+    public void ShowPanel<T>(E_UILayer layer = E_UILayer.Middle) where T : UIBasePanel
     {
         //通过面板名获取面板 预设体名必须和面板类名一致 
-        PanelInfo<T> panelInfo = GetPanel<T>(isSync);
-        //根据是否异步加载完成而判断
-        //if (panelInfo.PanelLoadTask.isFinish)
-        //    ReallyShowPanel<T>(panelInfo, layer, callBack);
-        //else
-        //    panelInfo.PanelLoadTask.AddCallbackCommand(() =>
-        //    {
-        //        ReallyShowPanel<T>(panelInfo, layer, callBack);
-        //    });
-    }
-    /// <summary>
-    /// 真正控制面板显示隐藏方法
-    /// </summary>
-    private void ReallyShowPanel<T>(PanelInfo<T> panelInfo, E_UILayer layer = E_UILayer.Middle, UnityAction<T> callBack = null) where T : UIBasePanel
-    {
+        T panelInfo = GetPanel<T>();
+
         //将面板预设体创建到对应父对象下 并且保持原本的缩放大小
-        panelInfo.panel.gameObject.transform.SetParent(GetLayerFather(layer), false);
+        panelInfo.gameObject.transform.SetParent(GetLayerFather(layer), false);
         //所有一切就绪 面板也有了，就直接操作了
         //如果要显示面板 会执行一次面板的默认显示逻辑
-        panelInfo.panel.ShowMe();
-        //如果存在回调 直接返回出去即可
-        callBack?.Invoke(panelInfo.panel);
+        panelInfo.ShowMe();
     }
+
     /// <summary>
     /// 隐藏面板
     /// </summary>
@@ -153,11 +163,10 @@ public class UIManager : Singleton_UnMono<UIManager>
             return;
         }
         //获取
-        PanelInfo<T> panelInfo = panelDic[typeof(T).Name] as PanelInfo<T>;
+        T panelInfo = panelDic[typeof(T).Name] as T;
 
         //隐藏
-        panelInfo.panel.HideMe();
-        panelInfo.panel.gameObject.SetActive(false);
+        panelInfo.HideMe();
     }
     /// <summary>
     /// 销毁面板，但是加载的资源还在内存里，只不过只是毁灭踪迹罢了
@@ -170,84 +179,46 @@ public class UIManager : Singleton_UnMono<UIManager>
             return;
         }
         //获取
-        PanelInfo<T> panelInfo = panelDic[typeof(T).Name] as PanelInfo<T>;
+        T panelInfo = panelDic[typeof(T).Name] as T;
 
         //销毁面板
-        Object.Destroy(panelInfo.panel.gameObject);
+        Object.Destroy(panelInfo.gameObject);
+
         //从容器中移除
         panelDic.Remove(typeof(T).Name);
     }
 
-    /// <summary>
-    /// 第一次操作面板时候，面板没有被加载，则需要先加载
-    /// </summary>
-    //public LoadTask LoadPanel<T>(bool isSync = false) where T : UIBasePanel
-    //{
-    //    //二重防null认证
-    //    string panelName = typeof(T).Name;
-    //    //不存在面板
-    //    if (!panelDic.ContainsKey(panelName))
-    //        panelDic.Add(panelName, new PanelInfo<T>());
+    //同步加载面板。异步请用预加载！！
+    public T LoadPanelSync<T>(string abName = null) where T : UIBasePanel
+    {
 
-    //    //取出字典中已经占好位置的数据
-    //    PanelInfo<T> panelInfo = panelDic[panelName] as PanelInfo<T>;
-
-    //    //加载成功后回调
-    //    UnityAction<GameObject> CreateCallback = (obj) =>
-    //    {
-    //        //实例化
-    //        GameObject panelObj = Object.Instantiate(obj);
-    //        Object.DontDestroyOnLoad(panelObj);
-    //        T panel = panelObj.GetComponent<T>();
-    //        //取出字典中已经占好位置的数据
-    //        PanelInfo<T> panelInfo = panelDic[panelName] as PanelInfo<T>;
-    //        //存储panel
-    //        panelInfo.panel = panel;
-    //    };
-    //    //选择是否同步还是异步加载
-    //    LoadTask task = null;
-    //    if (!isSync)
-    //    {
-
-    //        //实战时候，大修一波加载，要加载整体一起，只加载单个面板很傻逼的哦
-    //        //实战时候，大修一波加载，要加载整体一起，只加载单个面板很傻逼的哦
-    //        //实战时候，大修一波加载，要加载整体一起，只加载单个面板很傻逼的哦
-
-    //        //task = ResLoader.Instance.LoadAB_Async<GameObject>(FrameworkSetting.Instance.data.UIPrefabPackName, panelName, CreateCallback);
-    //    }
-    //    else
-    //    {
-    //       // task = ResLoader.Instance.LoadAB_Sync<GameObject>(FrameworkSetting.Instance.data.UIPrefabPackName, panelName);
-    //        CreateCallback.Invoke((task.ResInfo as Res<GameObject>).asset);
-    //    }
-    //    //自动开始加载
-    //    task.StartLoadTask();
-    //    return task;
-    //}
+        if (abName == null)
+            abName = SettingData.abLoadSetting.UIPrefabPackName;
+        //二重防null认证
+        if (!panelDic.ContainsKey(typeof(T).Name))
+        {
+            panelDic.Add(typeof(T).Name, null);
+        }
+        GameObject uiObj = Object.Instantiate(ResLoader.Instance.LoadAB_Sync(abName, typeof(T).Name) as GameObject);
+        T panelInfo = uiObj.GetComponent<T>();
+        panelDic[typeof(T).Name] = panelInfo;
+        return panelInfo;
+    }
 
     /// <summary>
     /// 获取面板
     /// </summary>
     /// <typeparam name="T">面板的类型</typeparam>
-    public PanelInfo<T> GetPanel<T>(bool isSync = false) where T : UIBasePanel
+    public T GetPanel<T>() where T : UIBasePanel
     {
         string panelName = typeof(T).Name;
-        //不存在面板
-        if (!panelDic.ContainsKey(panelName))
+        //存在面板
+        if (panelDic.ContainsKey(panelName) && panelDic[panelName] != null)
         {   //不存在面板 先存入字典当中 占个位置 之后如果又显示 我才能得到字典中的信息进行判断
-            panelDic.Add(panelName, new PanelInfo<T>());
+            return panelDic[panelName] as T;
         }
-
-        //取出字典中已经占好位置的数据
-        PanelInfo<T> panelInfo = panelDic[panelName] as PanelInfo<T>;
-        //面板没加载，那就先加载面板
-        if (panelInfo.panel == null)
-        {
-            //panelInfo.PanelLoadTask = LoadPanel<T>(isSync);
-        }
-
-        return panelInfo;
-
+        //不存在就同步加载把
+        return LoadPanelSync<T>();
     }
 
 

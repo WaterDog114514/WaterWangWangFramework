@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -179,7 +177,6 @@ public class PoolManager
     public void Clear()
     {
         dic_Pool.Clear();
-        root = null;
     }
 
     public void DEMOTEST()

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 173461080
+CRC: 2492473085
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 0c070cfdf01db834fb0b7bf878b4daac
+    Hash: 6bbda7dfb4e2d37c083bba99b7f9026e
   TypeTreeHash:
     serializedVersion: 2
     Hash: ebfe3916a5f87e37227d1fb19e7d01c9
@@ -27,61 +27,61 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/Low Poly Guns/Models/Guns/assault3/assault3_diffuse.png
-- Assets/Low Poly Guns/Models/Guns/shotgun1/shotgun1_diffuse.png
-- Assets/Low Poly Guns/Models/Guns/pistol4/pistol4.mat
-- Assets/Low Poly Guns/Models/Guns/pistol2/pistol2.fbx
-- Assets/Low Poly Guns/Models/Guns/pistol3/pistol3_normal.png
-- Assets/Low Poly Guns/Models/Guns/assault2/assault2_normal.png
-- Assets/Low Poly Guns/Models/Guns/assault1/assault1_normal.png
-- Assets/Low Poly Guns/Models/Guns/shotgun2/shotgun2_diffuse.png
-- Assets/Low Poly Guns/Models/Guns/sniper1/sniper1.fbx
-- Assets/Low Poly Guns/Models/Guns/sniper2/sniper2.mat
-- Assets/Low Poly Guns/Materials/assault2.mat
-- Assets/Low Poly Guns/Models/Guns/assault3/assault3_normal.png
-- Assets/Low Poly Guns/Models/Guns/assault2/assault2_diffuse.png
-- Assets/Low Poly Guns/Models/Guns/smg1/smg1.fbx
-- Assets/Low Poly Guns/Models/Guns/assault2/assault2.fbx
-- Assets/Low Poly Guns/Models/Guns/shotgun1/shotgun1.fbx
-- Assets/Low Poly Guns/Models/Guns/smg2/smg2_normal.png
-- Assets/Low Poly Guns/Models/Guns/pistol3/pistol3.mat
-- Assets/Low Poly Guns/Models/Guns/smg1/smg1_normal.png
-- Assets/Low Poly Guns/Models/Guns/shotgun1/shotgun1.mat
-- Assets/Low Poly Guns/Materials/assault3.mat
-- Assets/Low Poly Guns/Models/Guns/pistol4/pistol4_diffuse.png
-- Assets/Low Poly Guns/Models/Guns/smg1/smg1.mat
-- Assets/Low Poly Guns/Models/Guns/smg2/smg2.fbx
-- Assets/Low Poly Guns/Models/Guns/assault1/assault1.fbx
-- Assets/Low Poly Guns/Models/Guns/pistol1/pistol1.fbx
-- Assets/Low Poly Guns/Models/Guns/shotgun2/shotgun2.mat
-- Assets/Low Poly Guns/Models/Guns/sniper1/sniper1.mat
-- Assets/Low Poly Guns/Models/Guns/pistol2/pistol2_normal.png
-- Assets/Low Poly Guns/Models/Guns/assault3/assault3.fbx
-- Assets/Low Poly Guns/Models/Guns/pistol4/pistol4.fbx
-- Assets/Low Poly Guns/Models/Guns/assault4/assault4_normal.png
-- Assets/Low Poly Guns/Models/Guns/shotgun2/shotgun2.fbx
-- Assets/Low Poly Guns/Models/Guns/sniper2/sniper2.fbx
-- Assets/Low Poly Guns/Models/Guns/pistol2/pistol2_diffuse.png
-- Assets/Low Poly Guns/Materials/assault4.mat
-- Assets/Low Poly Guns/Models/Guns/assault1/assault1_diffuse.png
-- Assets/Low Poly Guns/Models/Guns/sniper2/sniper2_diffuse.png
-- Assets/Low Poly Guns/Models/Guns/smg1/smg1_diffuse.png
-- Assets/Low Poly Guns/Materials/assault1.mat
-- Assets/Low Poly Guns/Models/Guns/pistol1/pistol1_diffuse.png
-- Assets/Low Poly Guns/Models/Guns/pistol4/pistol4_normal.png
-- Assets/Low Poly Guns/Models/Guns/assault4/assault4.fbx
-- Assets/Low Poly Guns/Models/Guns/smg2/smg2.mat
-- Assets/Low Poly Guns/Models/Guns/sniper1/sniper1_normal.png
-- Assets/Low Poly Guns/Models/Guns/pistol1/pistol1_normal.png
-- Assets/Low Poly Guns/Models/Guns/pistol3/pistol3_diffuse.png
-- Assets/Low Poly Guns/Models/Guns/shotgun2/shotgun2_normal.png
-- Assets/Low Poly Guns/Models/Guns/pistol3/pistol3.fbx
-- Assets/Low Poly Guns/Materials/Plane.mat
-- Assets/Low Poly Guns/Models/Guns/sniper2/sniper2_normal.png
-- Assets/Low Poly Guns/Models/Guns/smg2/smg2_diffuse.png
-- Assets/Low Poly Guns/Models/Guns/shotgun1/shotgun1_normal.png
-- Assets/Low Poly Guns/Models/Guns/pistol2/pistol2.mat
-- Assets/Low Poly Guns/Models/Guns/sniper1/sniper1_diffuse.png
-- Assets/Low Poly Guns/Models/Guns/pistol1/pistol1.mat
-- Assets/Low Poly Guns/Models/Guns/assault4/assault4_diffuse.png
+- Assets/Editor/Low Poly Guns/Models/Guns/assault3/assault3_diffuse.png
+- Assets/Editor/Low Poly Guns/Models/Guns/shotgun1/shotgun1_diffuse.png
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol4/pistol4.mat
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol2/pistol2.fbx
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol3/pistol3_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/assault2/assault2_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/assault1/assault1_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/shotgun2/shotgun2_diffuse.png
+- Assets/Editor/Low Poly Guns/Models/Guns/sniper1/sniper1.fbx
+- Assets/Editor/Low Poly Guns/Models/Guns/sniper2/sniper2.mat
+- Assets/Editor/Low Poly Guns/Materials/assault2.mat
+- Assets/Editor/Low Poly Guns/Models/Guns/assault3/assault3_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/assault2/assault2_diffuse.png
+- Assets/Editor/Low Poly Guns/Models/Guns/smg1/smg1.fbx
+- Assets/Editor/Low Poly Guns/Models/Guns/assault2/assault2.fbx
+- Assets/Editor/Low Poly Guns/Models/Guns/shotgun1/shotgun1.fbx
+- Assets/Editor/Low Poly Guns/Models/Guns/smg2/smg2_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol3/pistol3.mat
+- Assets/Editor/Low Poly Guns/Models/Guns/smg1/smg1_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/shotgun1/shotgun1.mat
+- Assets/Editor/Low Poly Guns/Materials/assault3.mat
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol4/pistol4_diffuse.png
+- Assets/Editor/Low Poly Guns/Models/Guns/smg1/smg1.mat
+- Assets/Editor/Low Poly Guns/Models/Guns/smg2/smg2.fbx
+- Assets/Editor/Low Poly Guns/Models/Guns/assault1/assault1.fbx
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol1/pistol1.fbx
+- Assets/Editor/Low Poly Guns/Models/Guns/shotgun2/shotgun2.mat
+- Assets/Editor/Low Poly Guns/Models/Guns/sniper1/sniper1.mat
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol2/pistol2_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/assault3/assault3.fbx
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol4/pistol4.fbx
+- Assets/Editor/Low Poly Guns/Models/Guns/assault4/assault4_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/shotgun2/shotgun2.fbx
+- Assets/Editor/Low Poly Guns/Models/Guns/sniper2/sniper2.fbx
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol2/pistol2_diffuse.png
+- Assets/Editor/Low Poly Guns/Materials/assault4.mat
+- Assets/Editor/Low Poly Guns/Models/Guns/assault1/assault1_diffuse.png
+- Assets/Editor/Low Poly Guns/Models/Guns/sniper2/sniper2_diffuse.png
+- Assets/Editor/Low Poly Guns/Models/Guns/smg1/smg1_diffuse.png
+- Assets/Editor/Low Poly Guns/Materials/assault1.mat
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol1/pistol1_diffuse.png
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol4/pistol4_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/assault4/assault4.fbx
+- Assets/Editor/Low Poly Guns/Models/Guns/smg2/smg2.mat
+- Assets/Editor/Low Poly Guns/Models/Guns/sniper1/sniper1_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol1/pistol1_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol3/pistol3_diffuse.png
+- Assets/Editor/Low Poly Guns/Models/Guns/shotgun2/shotgun2_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol3/pistol3.fbx
+- Assets/Editor/Low Poly Guns/Materials/Plane.mat
+- Assets/Editor/Low Poly Guns/Models/Guns/sniper2/sniper2_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/smg2/smg2_diffuse.png
+- Assets/Editor/Low Poly Guns/Models/Guns/shotgun1/shotgun1_normal.png
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol2/pistol2.mat
+- Assets/Editor/Low Poly Guns/Models/Guns/sniper1/sniper1_diffuse.png
+- Assets/Editor/Low Poly Guns/Models/Guns/pistol1/pistol1.mat
+- Assets/Editor/Low Poly Guns/Models/Guns/assault4/assault4_diffuse.png
 Dependencies: []

@@ -192,7 +192,7 @@ public class ResLoader : Singleton_UnMono<ResLoader>
     /// <summary>
     /// 创建预加载任务
     /// </summary>
-    public void CreatePreloadTask(AsyncLoadTask[] tasks)
+    public void CreatePreloadTask(params AsyncLoadTask[] tasks)
     {
        
         PreLoadTask preLoadTask = new PreLoadTask();
