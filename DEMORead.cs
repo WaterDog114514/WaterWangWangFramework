@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DEMORead : MonoBehaviour
 {
+    public Text text;
+    public float time;
     // Start is called before the first frame update
     void Start()
     {
-        PrefabLoaderManager.Instance.PreLoadPrefabFrmoExcel<MonsterPZContainer>();
-        ResLoader.Instance.StartPreload();
+        string[] text = TextTool.SplitString("ab£»µÐ·¨£»À­Â¶¶÷;¿ÕÉ¶µÄ£»kdsa;koaf", ';');
+        string ces = TextTool.GetDecimalStr(321.1145141919810f, 6);
+        //  PrefabLoaderManager.Instance.PreLoadPrefabFrmoExcel<MonsterPZContainer>();
+        //   ResLoader.Instance.StartPreload();
         //   ResLoader.Instance.CreatePreloadTaskFromExcel<MonsterPZContainer>("ArtPath");
         // ResLoader.Instance.CreatePreloadFromExcel<TestInfoContainer>("resPath");
     }
+
 
     private void OnGUI()
     {
@@ -31,6 +37,8 @@ public class DEMORead : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        time -= Time.deltaTime;
+        int total = (int)time;
+        text.text =TextTool.SecondToHMS_Semicolon(total);
     }
 }
