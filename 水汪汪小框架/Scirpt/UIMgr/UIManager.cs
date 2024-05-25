@@ -104,6 +104,7 @@ public class UIManager : Singleton_UnMono<UIManager>
                 GameObject panelObj = Object.Instantiate(Panels[i].Asset as GameObject);
                 UIBasePanel panelInfo = (panelObj).GetComponent<UIBasePanel>();
                 panelDic[panelInfo.GetType().Name] = panelInfo;
+                panelObj.transform.SetParent(middleLayer,false);
                 panelInfo.HideMe();
             }
         });

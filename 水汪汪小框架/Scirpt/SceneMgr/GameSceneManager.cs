@@ -31,7 +31,6 @@ public class GameSceneManager : Singleton_UnMono<GameSceneManager>
     {
         AsyncOperation ao = SceneManager.LoadSceneAsync(name);
         //不停的在协同程序中每帧检测是否加载结束 如果加载结束就不会进这个循环每帧执行了
-
         //加载进度的处理，等后面弄
         while (!ao.isDone)
         {
@@ -41,6 +40,5 @@ public class GameSceneManager : Singleton_UnMono<GameSceneManager>
         //避免最后一帧直接结束了 没有同步1出去
 
         callBack?.Invoke();
-        callBack = null;
     }
 }

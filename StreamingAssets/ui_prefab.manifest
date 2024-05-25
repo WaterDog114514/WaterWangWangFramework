@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3253107856
+CRC: 3407650891
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 07554eaad6a7788a76a5933a15ded6ed
+    Hash: 049dace726570b780267246c8caf52b3
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 0a53886151d032980443e2c7bc38f3b3
+    Hash: b5ce309e2b3ea7b4f5da604a5839d0d0
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -25,6 +25,10 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 3ff83af1ebe007b44b6cc3206994c67e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e85a8947bd0dbce4abfc650abb39d773, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9c69da675f64cd84eab87d2b43768380, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 128
@@ -54,5 +58,7 @@ SerializeReferenceClassIdentifiers:
   ClassName: UnityEngine.UI.SpriteState
 Assets:
 - Assets/Editor/ArtRes/ui_prefab/DEMOPANEL.prefab
+- Assets/Editor/ArtRes/ui_prefab/MAINPANEL.prefab
+- Assets/Editor/ArtRes/ui_prefab/LAJIPANEL.prefab
 Dependencies:
-- "D:/UnityProject/\u6C34\u6C6A\u6C6A\u5C0F\u6846\u67B6/AssetBundles/PC/ui_image"
+- "B:/UnityProject/\u6C34\u6C6A\u6C6A\u7F16\u8F91\u5668\u5F00\u53D1/AssetBundles/PC/ui_image"

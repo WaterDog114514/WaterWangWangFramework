@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3278606871
+CRC: 564118833
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -29,4 +29,4 @@ Assets:
 - Assets/Resources/Prefab/shotgun1.prefab
 - Assets/Resources/Prefab/sniper2.prefab
 Dependencies:
-- "D:/UnityProject/\u6C34\u6C6A\u6C6A\u5C0F\u6846\u67B6/AssetBundles/PC/gun"
+- "B:/UnityProject/\u6C34\u6C6A\u6C6A\u7F16\u8F91\u5668\u5F00\u53D1/AssetBundles/PC/gun"

@@ -18,21 +18,14 @@ public abstract class Obj
     /// 所属池子对象组
     /// </summary>
     public string PoolGroup;
-
-    /// <summary>
-    /// 对象池最大数量
-    /// </summary>
-    public int MaxCount;
     /// <summary>
     /// 对象的唯一id
     /// </summary>
     public int ID;
-
     //进出循环池回调
     public UnityAction EnterPoolCallback;
     public UnityAction QuitPoolCallback;
-    //对象初始化和销毁时候回调
-    public UnityAction IntiCallback;
+    // 销毁时候回调
     public UnityAction DestroyCallback;
 
 }

@@ -13,7 +13,6 @@ public class GameObj : Obj
     /// 实际游戏对象
     /// </summary>
     private GameObject Instance;
-    public GameObject gameObject => Instance.gameObject;
 
     public GameObj(GameObject Instance, UnityAction IntiCallback = null)
     {

@@ -1,32 +1,32 @@
 ManifestFileVersion: 0
-CRC: 1360617157
+CRC: 1834023474
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: gunprefab
-      Dependencies:
-        Dependency_0: gun
+      Name: gun
+      Dependencies: {}
     Info_1:
+      Name: animegirls
+      Dependencies: {}
+    Info_2:
       Name: prpr
       Dependencies:
         Dependency_0: animegirls
         Dependency_1: basicbandit
-    Info_2:
-      Name: gun
-      Dependencies: {}
     Info_3:
-      Name: animegirls
-      Dependencies: {}
+      Name: ui_prefab
+      Dependencies:
+        Dependency_0: ui_image
     Info_4:
       Name: basicbandit
       Dependencies: {}
     Info_5:
-      Name: voice
-      Dependencies: {}
-    Info_6:
-      Name: ui_prefab
+      Name: gunprefab
       Dependencies:
-        Dependency_0: ui_image
-    Info_7:
+        Dependency_0: gun
+    Info_6:
       Name: ui_image
+      Dependencies: {}
+    Info_7:
+      Name: voice
       Dependencies: {}
