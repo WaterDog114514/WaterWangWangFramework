@@ -55,6 +55,8 @@ public class main_EditorABLoader
             return ".png";
         else if (typeof(T) == typeof(AudioClip))
             return  ".mp3";
+
+        Debug.LogError($"Editor加载无法解析{typeof(T).Name}类型的文件的后缀名，请双击错误添加解析");
         return null;
     }
     //2.加载图集相关资源的

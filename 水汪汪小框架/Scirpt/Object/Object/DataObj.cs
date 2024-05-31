@@ -9,6 +9,4 @@ using UnityEngine;
 public class DataObj : Obj
 {
     public override string PoolIdentity => GetType().Name;
-
-
 }

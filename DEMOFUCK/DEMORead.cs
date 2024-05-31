@@ -11,10 +11,11 @@ public class DEMORead : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string[] text = TextTool.SplitString("ab；敌法；拉露恩;空啥的；kdsa;koaf", ';');
-        string ces = TextTool.GetDecimalStr(321.1145141919810f, 6);
-        //  PrefabLoaderManager.Instance.PreLoadPrefabFrmoExcel<MonsterPZContainer>();
-        //   ResLoader.Instance.StartPreload();
+        //加载怪物表中的所有资源路径下的预设体
+        PrefabLoaderManager.Instance.PreLoadPrefabFrmoExcel<MonsterPZContainer>();
+        ResLoader.Instance.StartPreload();
+        PrefabLoaderManager.Instance.PreLoadPrefabFrmoExcel<MonsterPZContainer>();
+
         //   ResLoader.Instance.CreatePreloadTaskFromExcel<MonsterPZContainer>("ArtPath");
         // ResLoader.Instance.CreatePreloadFromExcel<TestInfoContainer>("resPath");
     }

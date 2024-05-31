@@ -104,8 +104,9 @@ public class PoolManager
         GameObj obj = null;
         if (info is UnLimitedPrefabInfo)
         {
-            Debug.LogError($"获取对象失败，该对象{info.res.name}不受对象池约束");
-            return null;
+            Debug.LogWarning($"该对象{info.res.name}不受对象池约束，已直接使用直接创建预设体操作");
+            obj = ObjectManager.Instance.CreateGameObject(info);
+            return obj;
         }
         //有了的方法 直接从池子拿
         if (dic_Pool.ContainsKey((info as PoolPrefabInfo).identity))

@@ -39,6 +39,11 @@ public class ObjectManager : Singleton_UnMono<ObjectManager>
             gameObj.name = (info as PoolPrefabInfo).identity;
             obj.PoolGroup = (info as PoolPrefabInfo).PoolGroup;
         }
+        else if(info is UnLimitedPrefabInfo)
+        {
+            gameObj.name += "(UnLimited)";
+            obj.PoolGroup = "UnLimited";
+        }
         gameObj.AddComponent<GameObjectInstance>().Inti(obj);
         return obj;
     }
@@ -59,11 +64,11 @@ public class ObjectManager : Singleton_UnMono<ObjectManager>
 
     //获取数据对象从对象池之中
     public T getDataObjFromPool<T>() where T : DataObj
-    { 
+    {
         return poolManager.GetDataObj(typeof(T)) as T;
     }
 
-    public DataObj getDataObjFromPool(Type type)  
+    public DataObj getDataObjFromPool(Type type)
     {
         return poolManager.GetDataObj(type);
     }
@@ -75,7 +80,7 @@ public class ObjectManager : Singleton_UnMono<ObjectManager>
     /// <returns></returns>
     public T CreateDataObject<T>() where T : DataObj, new()
     {
-        return CreateDataObject(typeof(T)) as T; 
+        return CreateDataObject(typeof(T)) as T;
     }
     public DataObj CreateDataObject(Type type)
     {
@@ -90,13 +95,13 @@ public class ObjectManager : Singleton_UnMono<ObjectManager>
         return obj;
     }
 
-    private int CurrentNewObjID=0;
+    private int CurrentNewObjID = 0;
     /// <summary>
     /// 给予新对象唯一ID，一般创建时候使用
     /// </summary>
     private void GiveObjID(Obj obj)
     {
-       obj.ID = CurrentNewObjID++;
+        obj.ID = CurrentNewObjID++;
     }
 
     /// <summary>
@@ -105,6 +110,10 @@ public class ObjectManager : Singleton_UnMono<ObjectManager>
     /// <param name="obj"></param>
     public void DestroyObj(Obj obj)
     {
+        if (obj.PoolGroup == "UnLimited")
+        {
+            ReallyDestroyObj(obj);
+        }
         poolManager.DestroyObj(obj);
     }
     /// <summary>

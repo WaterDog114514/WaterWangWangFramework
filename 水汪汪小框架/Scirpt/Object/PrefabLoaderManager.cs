@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PrefabLoaderManager : Singleton_UnMono<PrefabLoaderManager>
 {
@@ -44,8 +45,8 @@ public class PrefabLoaderManager : Singleton_UnMono<PrefabLoaderManager>
     /// <summary>
     /// 根据Excel表加载表中的预设体
     /// </summary>
-    /// <typeparam name="T">预设体所在表</typeparam>
-    public void PreLoadPrefabFrmoExcel<T>() where T : DataBaseContainer
+    /// <typeparam name="T">预设体所在表</typeparam>  
+    public void PreLoadPrefabFrmoExcel<T>(UnityAction<GameObject[]> callback = null) where T : DataBaseContainer
     {
         //先获取预设体表中的路径和对象池组以及唯一id
         string[] paths = GameExcelDataLoader.Instance.GetDataPropertyInfo<T>(SettingData.loadPrefabSetting.ExcelArtPathName);
@@ -68,8 +69,6 @@ public class PrefabLoaderManager : Singleton_UnMono<PrefabLoaderManager>
                 //成功加载开始分类记录
                 LoadPrefab[i] = obj;
             }
-
-
             //赋值加组
             for (int i = 0; i < LoadPrefab.Length; i++)
             {
@@ -81,7 +80,7 @@ public class PrefabLoaderManager : Singleton_UnMono<PrefabLoaderManager>
                 }
                 else
                 {
-                    info = new PoolPrefabInfo() { PoolGroup = groups[i] , identity = LoadPrefab[i].name };
+                    info = new PoolPrefabInfo() { PoolGroup = groups[i], identity = LoadPrefab[i].name };
                 }
                 info.res = LoadPrefab[i];
 
@@ -118,9 +117,9 @@ public class PrefabLoaderManager : Singleton_UnMono<PrefabLoaderManager>
                 }
 
             }
-
+            callback?.Invoke(LoadPrefab);
         });
-      
+
 
 
     }
@@ -131,7 +130,7 @@ public class PrefabLoaderManager : Singleton_UnMono<PrefabLoaderManager>
 }
 //预设体信息
 //预设体有UI预设体和普通游戏对象预设体之分
-public class PrefabInfo
+public abstract class PrefabInfo
 {
     public GameObject res;
 }

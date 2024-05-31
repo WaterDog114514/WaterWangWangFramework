@@ -38,7 +38,17 @@ public class ResLoader : Singleton_UnMono<ResLoader>
     }
 
     #region AB包加载相关
-    //下面两者创建任务然后直接加载
+    //获取加载完毕的AB包资源
+    public T GetRes_FromAB<T>(string abName, string resName) where T : UnityEngine.Object
+    {
+        string key = $"AB_{abName}_{resName}";
+        if (!dic_LoadedRes.ContainsKey(key))
+        {
+            Debug.LogError($"获取{abName}_{resName}资源失败，因为还开始加载此资源！");
+            return null;
+        }
+        return dic_LoadedRes[key].GetAsset<T>();
+    }
     // 通过类型加载AB包
     public void LoadAB_Async<T>(string abName, string resName, UnityAction<T> callback) where T : UnityEngine.Object
     {
@@ -132,6 +142,7 @@ public class ResLoader : Singleton_UnMono<ResLoader>
     #endregion
 
     #region Resources加载模块
+
     public void LoadRes_Async<T>(string path, UnityAction<T> callback) where T : UnityEngine.Object
     {
         AsyncLoadTask asyncLoadTask = CreateRes_Async<T>(path, callback);
@@ -175,7 +186,23 @@ public class ResLoader : Singleton_UnMono<ResLoader>
                 return dic_LoadedRes[path].GetAsset<T>();
             else Debug.LogError($"获取资源{path}失败，可能是正在进行异步加载中！请通过异步获取");
         }
-        return resourcesLoader.LoadSync<T>(path);
+        //把资源放去
+        T res = resourcesLoader.LoadSync<T>(path);
+        Res resInfo = new Res(typeof(T));
+        resInfo.Asset = res;
+        dic_LoadedRes.Add(path, resInfo);
+        return res;
+    }
+
+    public T GetRes_FromRes<T>(string path) where T : UnityEngine.Object
+    {
+
+        if (!dic_LoadedRes.ContainsKey(path))
+        {
+            Debug.LogError($"获取{path}资源失败，因为还开始加载此资源！");
+            return null;
+        }
+        return dic_LoadedRes[path].GetAsset<T>();
     }
     #endregion
 
@@ -194,7 +221,7 @@ public class ResLoader : Singleton_UnMono<ResLoader>
     /// </summary>
     public void CreatePreloadTask(params AsyncLoadTask[] tasks)
     {
-       
+
         PreLoadTask preLoadTask = new PreLoadTask();
         preLoadTask.TaskList.AddRange(tasks);
         preloader.CreatePreLoadTask(preLoadTask);
