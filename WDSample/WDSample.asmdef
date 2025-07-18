@@ -1,0 +1,16 @@
+{
+    "name": "WDSample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b918504573c069f4a9c454c16a8e57aa"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

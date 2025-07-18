@@ -1,0 +1,20 @@
+{
+    "name": "WDFrameworkEditor",
+    "rootNamespace": "",
+    "references": [
+        "Assembly-CSharp",
+        "Unity.TextMeshPro",
+        "WDFrameworkRuntime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

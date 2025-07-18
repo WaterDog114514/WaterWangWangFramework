@@ -1,0 +1,17 @@
+{
+    "name": "WDProjectScript",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b918504573c069f4a9c454c16a8e57aa",
+        "GUID:e98ff4c7fd266564d883a04c51002f93"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
